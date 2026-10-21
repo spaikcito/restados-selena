@@ -1,0 +1,26 @@
+AGENCIA SELENA - DOS FUENTES
+
+Copiar la carpeta resultados_selena en C:\xampp\htdocs\.
+Iniciar Apache y abrir http://localhost/resultados_selena/
+
+Según 365 muestra únicamente GuacharoActivo, Lotto Activo, La Granjita, Lotto Activo RD y LotoChaima.
+Según Lotoven tiene consulta PHP independiente y no reemplaza ni altera los datos de 365 o el historial general.
+Ambas fuentes se consultan cada 60 segundos. Es necesario que el proveedor permita las consultas y mantenga su estructura.
+El historial desplegable de abajo corresponde exclusivamente a Resultados365.
+Los favoritos se separan por fuente. Compartir copia solo los favoritos, identificando los de Lotoven.
+PHP requiere extensiones curl, dom y mbstring; XAMPP debe tener acceso HTTPS.
+No usar los datos como confirmación oficial sin verificarlos.
+
+NUEVO: Copiar favoritos omite las etiquetas de fuente. Las tarjetas muestran imagenes remotas obtenidas de cada pagina cuando estan disponibles. Requiere Internet y permiso de uso de imagenes de los sitios originales; si falla una imagen se ve un emoji.
+
+MEJORA DE IMÁGENES: ambas cuadrículas tienen formato cuadrado. Lotoven usa ampliación visual y, si el HTML publica srcset o data-original, se prioriza la variante más grande. Si la página original solo ofrece una miniatura, no es posible inventar resolución extra.
+
+NUEVO: panel Según Lotería de Hoy, independiente de 365 y Lotoven. Archivo api_loteriadehoy.php.
+El botón 📌 al lado del título de cada lotería en el historial agrega/retira su último resultado de la sección En el encabezado. La selección queda guardada en este navegador.
+Las fuentes se consultan cada 60 segundos. Si una no responde, no se reemplazan sus resultados con los de otra fuente. Las imágenes se cargan desde los sitios externos cuando son accesibles.
+
+CAMBIOS: Logo Agencia Selena en encabezado. Para cada lotería fijada, se utiliza la primera respuesta válida que llega de cualquiera de las tres fuentes en cada ronda de actualización (60 s). Las tres fuentes siguen separadas en sus propios cuadros.
+
+AJUSTES DE INTERFAZ: el botón NUESTRO WHATSAPP está en la cabecera (https://wa.me/584220457432, equivalente internacional del número 0422-0457432). Actualizar y estado están junto a Loterías de cada hora, y Copiar favoritos junto a Intermedias.
+
+BOTONES INDEPENDIENTES: Copiar de cada hora usa exclusivamente resultados fijados con chincheta y marcados favoritos en el encabezado superior; Copiar intermedias solo las cuatro tarjetas intermedias favoritas. Ambos filtran desde la hora actual de Caracas. Favicon: logo de Agencia Selena.

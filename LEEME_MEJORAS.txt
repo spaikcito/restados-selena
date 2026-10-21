@@ -1,0 +1,11 @@
+AGENCIA SELENA - INSTALACIÓN XAMPP
+1) Sustituye C:\xampp\htdocs\resultados_selena con esta carpeta (haz copia de seguridad antes).
+2) Inicia Apache y MySQL en XAMPP. Abre phpMyAdmin e importa instalar.sql.
+3) Copia config.example.php como config.php. Cambia las credenciales locales si corresponde.
+4) Abre http://localhost/resultados_selena/ y pulsa Ctrl+F5.
+5) El historial comienza a guardarse cuando la aplicación consulta las fuentes con MySQL configurado; no puede recuperar sorteos antiguos que las fuentes no publiquen.
+6) Si MySQL falla, la interfaz y las tres consultas siguen disponibles, pero no se guarda historial.
+7) Avisos sonoros: hay que activarlos desde el botón; pueden requerir mantener la pestaña abierta.
+8) Las imágenes se almacenan en cache_imagenes/ cuando el sitio original permite descargarlas. La calidad depende de la imagen de origen.
+9) Refresca cada 30 segundos cerca de la hora y cada 90 segundos en el resto del horario, solamente mientras la pestaña está activa. Pueden existir límites de acceso a los sitios terceros.
+10) Los resultados pueden diferir por sorteo u hora. Comprueba la hora y confirma fuentes antes de distribuir resultados.

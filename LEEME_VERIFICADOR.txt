@@ -1,0 +1,6 @@
+VERIFICADOR DE TICKETS
+Abrir http://localhost/resultados_selena/verificador.php
+Pegar ticket original y registrado. Acepta jugadas múltiples, tripletas y montos por tramo.
+El analizador funciona localmente en el navegador; no transmite texto a servicios externos.
+Revisar cualquier línea no interpretada y cotejar siempre con el ticket impreso.
+No valida autenticidad de tickets ni resultados ganadores.

@@ -1,0 +1,8 @@
+Alias configurados para el verificador:
+l, loto, lotto, activo => Lotto Activo
+g, granjita, granja => La Granjita
+s, selva => SelvaPlus
+condor => CondorGana
+guacharito => Guacharito Millonario
+int, inter => Lotto Activo RD INT (modalidad intermedia)
+Los nombres Lotto Activo RD y Lotto Activo RD INT siguen separados.
