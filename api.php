@@ -4,7 +4,9 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 
-function reply($body, $status=200) { if(!empty($body['ok'])&&is_array($body['resultados']??null)){require_once __DIR__.'/storage.php';selena_archive('365',$body['resultados']);}http_response_code($status); echo json_encode($body, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_INVALID_UTF8_SUBSTITUTE); exit; }
+require_once __DIR__.'/source_common.php';
+function reply($body,$status=200){selena_emit($body,$status);}
+selena_cache_start('365');
 if (!extension_loaded('curl') || !class_exists('DOMDocument')) reply(['ok'=>false,'error'=>'Activa las extensiones curl y dom de PHP en XAMPP.'],500);
 $source='https://resultados365.com/resultados/';
 $ch=curl_init($source);
@@ -14,6 +16,7 @@ if(!$html || $http!==200) reply(['ok'=>false,'error'=>'No se pudo consultar Resu
 libxml_use_internal_errors(true);
 $dom=new DOMDocument(); $dom->loadHTML('<?xml encoding="utf-8"?>'.$html); libxml_clear_errors();
 $xp=new DOMXPath($dom);
+selena_require_today(selena_date($xp->evaluate('string(//input[@id="fecha-picker"]/@value)')));
 $names=['Condor Gana','Ruleta Royal','El Granjazo','GuacharoActivo','SelvaPlus','Lotto Activo','Lotto Activo RD','Loto Activo RD INT','La Granjita','CazaLoton','Monje Millonario','Chance Animal B','Chance Animal A','CentenaPlus','CentenaAnimalitos','TropiGana','Guacharito','Lotto Pantera','Ricachona','GranjitaPlus','LotoChaima','Lotto Animalito','PandaPlus','MegaAnimal','Granja Millonaria'];
 // Orden largo primero, para evitar reconocer "Lotto Activo" dentro de "Lotto Activo RD".
 usort($names,function($a,$b){return strlen($b)-strlen($a);});
@@ -74,3 +77,4 @@ if(!$results){
 }
 if(!$results) reply(['ok'=>false,'error'=>'La página respondió, pero no se pudieron identificar resultados. Es posible que haya cambiado su estructura.'],502);
 reply(['ok'=>true,'fuente'=>$source,'consultado_en'=>gmdate('c'),'resultados'=>$results,'cantidad'=>count($results),'logos'=>$logos]);
+

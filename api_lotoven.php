@@ -2,7 +2,9 @@
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
-function answer($v,$status=200){if(!empty($v['ok'])&&is_array($v['resultados']??null)){require_once __DIR__.'/storage.php';selena_archive('lotoven',$v['resultados']);}http_response_code($status);echo json_encode($v,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_INVALID_UTF8_SUBSTITUTE);exit;}
+require_once __DIR__.'/source_common.php';
+function answer($body,$status=200){selena_emit($body,$status);}
+selena_cache_start('lotoven');
 if(!extension_loaded('curl')||!class_exists('DOMDocument'))answer(['ok'=>false,'error'=>'Activa curl y dom en PHP de XAMPP.'],500);
 $url='https://lotoven.com/animalitos/';
 $ch=curl_init($url);
@@ -38,6 +40,7 @@ foreach($headers as $h){
    }
  }
  $buffer=normtxt($buffer);
+ if(selena_date($buffer)!==selena_today())continue;
  if(preg_match_all('/(?<!\d)(\d{1,3})\s+([\p{L}][\p{L}\s\-]{1,26}?)\s+((?:0?[1-9]|1[0-2]):[0-5]\d\s*[AP]M)\b/iu',$buffer,$matches,PREG_SET_ORDER)){
    foreach($matches as $m2){$animal=normtxt($m2[2]);$time=strtoupper(preg_replace('/\s+/',' ',trim($m2[3])));if(preg_match('/(?:Resultados|Tuesday|October)/iu',$animal))continue;
      $key=$name.'|'.$time;$found[$key]=['loteria'=>$name,'numero'=>str_pad($m2[1],2,'0',STR_PAD_LEFT),'animal'=>$animal,'hora'=>$time];
@@ -88,4 +91,5 @@ foreach($found as &$entry){
 }unset($entry);
 if(!$found)answer(['ok'=>false,'error'=>'Lotoven respondió pero su estructura no permitió extraer los sorteos. No se mostrarán valores de otra fuente.'],502);
 answer(['ok'=>true,'fuente'=>$url,'resultados'=>array_values($found),'cantidad'=>count($found),'consultado_en'=>gmdate('c')]);
+
 

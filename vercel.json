@@ -8,7 +8,7 @@
   },
   "routes": [
     {
-      "src": "/(assets/.*|favicon\\.(?:ico|png)|logo_agencia_selena\\.png|verificador\\.js|animales_guacharito\\.json)",
+      "src": "/(assets/.*|favicon\\.(?:ico|png)|logo_agencia_selena\\.png|(?:verificador|calculadora)\\.js|animales_guacharito\\.json)",
       "dest": "/$1"
     },
     {
@@ -17,3 +17,4 @@
     }
   ]
 }
+

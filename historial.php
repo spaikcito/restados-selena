@@ -1,4 +1,0 @@
-<?php
-header('Content-Type: application/json; charset=utf-8'); header('Cache-Control: no-store');require_once __DIR__.'/storage.php';
-$db=selena_db();if(!$db){echo json_encode(['ok'=>false,'error'=>'MySQL sin configurar']);exit;}
-try{$limit=max(1,min(300,(int)($_GET['limit']??100)));$from=(string)($_GET['fecha']??date('Y-m-d'));if(!preg_match('/^\d{4}-\d{2}-\d{2}$/',$from))$from=date('Y-m-d');$query=$db->prepare('SELECT fecha,proveedor,loteria,hora,numero,animal,imagen FROM resultados WHERE fecha=:fecha ORDER BY hora ASC LIMIT '.$limit);$query->execute(['fecha'=>$from]);echo json_encode(['ok'=>true,'resultados'=>$query->fetchAll(PDO::FETCH_ASSOC)],JSON_UNESCAPED_UNICODE|JSON_INVALID_UTF8_SUBSTITUTE);}catch(Throwable $e){http_response_code(500);echo json_encode(['ok'=>false,'error'=>'Error de consulta']);}

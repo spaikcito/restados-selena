@@ -3,7 +3,9 @@
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
-function respond($data,$code=200){if(!empty($data['ok'])&&is_array($data['resultados']??null)){require_once __DIR__.'/storage.php';selena_archive('loteriadehoy',$data['resultados']);}http_response_code($code);echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_INVALID_UTF8_SUBSTITUTE);exit;}
+require_once __DIR__.'/source_common.php';
+function respond($body,$status=200){selena_emit($body,$status);}
+selena_cache_start('hoy');
 if(!extension_loaded('curl')||!class_exists('DOMDocument'))respond(['ok'=>false,'error'=>'Habilita curl y dom en PHP.'],500);
 $url='https://loteriadehoy.com/animalitos/resultados/';
 $ch=curl_init($url);
@@ -20,7 +22,7 @@ function imageURL($node){if(!$node)return '';foreach(['data-original','data-src'
 $current=null;$pending=null;$results=[];$lastImg='';
 foreach($xp->query('//h3|//h4|//h5|//img') as $node){
  $tag=strtolower($node->nodeName);
- if($tag==='h3'){$current=lotteryName(txt($node->textContent));$pending=null;$lastImg='';continue;}
+ if($tag==='h3'){$current=lotteryName($node->getAttribute('class'))??lotteryName(txt($node->textContent));if(selena_date(txt($node->parentNode->textContent))!==selena_today())$current=null;$pending=null;$lastImg='';continue;}
  if(!$current)continue;
  if($tag==='img'){$img=imageURL($node);if($img)$lastImg=$img;continue;}
  if($tag==='h4'){
@@ -40,4 +42,5 @@ foreach($xp->query('//h3|//h4|//h5|//img') as $node){
 }
 if(!$results)respond(['ok'=>false,'error'=>'La página respondió pero no se pudieron leer resultados. Su estructura puede haber cambiado.'],502);
 respond(['ok'=>true,'fuente'=>$url,'resultados'=>array_values($results),'cantidad'=>count($results),'consultado_en'=>gmdate('c')]);
+
 

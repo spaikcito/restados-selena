@@ -152,7 +152,7 @@
 .calculator-disclosure>.calc-panel{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:16px}
 </style><link rel="icon" type="image/png" sizes="48x48" href="favicon.png"><link rel="shortcut icon" href="favicon.ico"><link rel="apple-touch-icon" href="favicon.png"></head><body><main class="shell"><header class="top"><div class="brand"><div class="brand-icon"><img src="logo_agencia_selena.png" alt="Logo Agencia Selena" width="48" height="48"></div><div><strong>Agencia Selena</strong><small>Resultados de animalitos · Actualización automática</small></div></div><a class="header-whatsapp" href="https://wa.me/584220457432" target="_blank" rel="noopener noreferrer" aria-label="Abrir nuestro WhatsApp">☏ NUESTRO WHATSAPP</a><a class="header-whatsapp" style="background:#202c33;border:1px solid #38594e" href="verificador.php">✓ VERIFICAR TICKETS</a></header><details class="calculator-disclosure" id="calculator-disclosure"><summary><span>▦ Calculadora de jugadas</span><span class="calculator-chevron" aria-hidden="true">⌄</span></summary><section class="hero calc-panel" id="header-calculator" aria-labelledby="calcTitle"><h2 id="calcTitle">Calculadora de jugadas</h2><p class="hint">Escribe los números y el monto para calcular el total. Ejemplo: <b>loto: 25 14 x 50</b> = <b>Bs 100,00</b>; <b>loto y granja: 25 14 x 50</b> = <b>Bs 200,00</b>.</p><div class="calc-layout"><div><textarea id="calcInput" spellcheck="false" placeholder="granja 10 5 17 35 23 32 21 14 25 x 500  0 por 700&#10;loto 17 33 por 2000  5 4 22 7 27 x 200  15 por 1500"></textarea><div class="calc-help">Puedes escribir números o nombres de animalitos, con o sin tildes. Escribe las loterías y las jugadas en la misma línea o debajo. «por», «x» y «×» significan lo mismo. Puedes escribir varios grupos seguidos: 25 14 x 50 0 por 100. Acepta «loto», «granja», «loto y granja», «loto/granja» o «loto granja». Cada jugada se multiplica por las loterías indicadas; sin encabezado se cuenta una lotería. «Para guácharo x 500» repite las selecciones del grupo anterior con el nuevo monto.</div><div class="actions"><button id="calcClear" type="button">Limpiar calculadora</button></div></div><div class="calc-output"><div class="hint">TOTAL DE JUGADAS</div><div class="calc-total" id="calcTotal">Bs 0,00</div><div class="calc-help" id="calcCount">0 selecciones · 0 líneas</div><div id="calcBreakdown" aria-live="polite"></div><div class="calc-warning" id="calcWarnings" aria-live="polite"></div></div></div></section></details><div class="section-head with-actions"><div><h2>📌 Loterías de cada hora</h2><p>Pulsa 📌 junto al título de una lotería para fijarla. Se mostrará el primer resultado válido recibido de las tres páginas en cada actualización.</p></div><div class="section-actions"><span class="status"><i class="dot" id="dot"></i><span id="status">Conectando…</span></span><button class="btn" id="refresh">↻ Actualizar</button><button class="btn green" id="share-hourly" type="button">↗ Copiar de cada hora</button></div></div><section class="hero"><div id="featured" class="featured"><div class="empty-state">No hay loterías fijadas todavía.</div></div></section><div class="section-head with-actions"><div><h2>⏱️ Intermedias</h2><p>SelvaPlus, Monje Millonario, Guacharito y Loto Activo RD INT. Se muestra el último sorteo recibido de cada lotería.</p></div><div class="section-actions"><button class="btn green" id="share-intermediate" type="button">↗ Copiar intermedias</button></div></div><section class="hero"><div id="intermedias" class="featured"><div class="empty-state">Consultando resultados de intermedias…</div></div></section><div class="source-accordion" data-source="365"><button class="source-heading" type="button" aria-expanded="false" aria-controls="source365"><span class="source-mark">🔥</span><span><strong>Según 365</strong><small>Resultados independientes</small></span><span class="source-right"><span id="date"></span><span class="source-arrow">⌄</span></span></button><section id="source365" class="hero source-content" hidden><div class="latest" id="latest"><div class="empty-state">Consultando resultados…</div></div><div class="panel-note">★ Marca favoritos para copiarlos.</div></section></div>
 <div class="source-accordion" data-source="lotoven"><button class="source-heading" type="button" aria-expanded="false" aria-controls="sourceLotoven"><span class="source-mark">🌿</span><span><strong>Según Lotoven</strong><small>Resultados independientes</small></span><span class="source-right"><span id="lotoven-status">Consultando…</span><span class="source-arrow">⌄</span></span></button><section id="sourceLotoven" class="hero source-content hero-lotoven" hidden><div class="latest" id="lotoven-latest"><div class="empty-state">Consultando resultados…</div></div></section></div>
-<div class="source-accordion" data-source="hoy"><button class="source-heading" type="button" aria-expanded="false" aria-controls="sourceHoy"><span class="source-mark">🍀</span><span><strong>Según Lotería de Hoy</strong><small>Resultados independientes</small></span><span class="source-right"><span id="hoy-status">Consultando…</span><span class="source-arrow">⌄</span></span></button><section id="sourceHoy" class="hero source-content" hidden><div class="latest" id="hoy-latest"><div class="empty-state">Consultando resultados…</div></div></section></div><div class="small-tools"><button class="btn" id="notifications" type="button">🔔 Activar avisos</button><span id="next-draw" class="mini-meta">Próximo sorteo: calculando…</span><span id="db-status" class="mini-meta">Historial: comprobando MySQL…</span></div><div class="toolbar"><h2>Todas las loterías</h2><div class="filters"><input id="search" class="search" placeholder="⌕ Buscar lotería…" aria-label="Buscar lotería"/><button class="btn" id="expand">Abrir todas</button></div></div><div class="tabs"><button class="tab active" data-filter="all">Todas</button><button class="tab" data-filter="favorite">★ Favoritas</button></div><section id="groups" class="groups"><div class="empty-state">Cargando loterías…</div></section><div class="foot">Fuentes independientes: resultados365.com, lotoven.com/animalitos/ y loteriadehoy.com/animalitos/resultados/. Agencia Selena no es una página oficial de las loterías. Verifica los resultados antes de utilizarlos.</div></main><div id="toast" class="toast" role="status"></div><div id="copy-dialog" class="dialog-screen" hidden style="display:none"><div class="dialog-panel" role="dialog" aria-modal="true" aria-label="Vista previa del mensaje"><strong>Vista previa de favoritos</strong><p class="mini-meta">Puedes revisar y editar el mensaje antes de copiarlo.</p><textarea id="copy-preview"></textarea><div class="small-tools"><button class="btn green" id="confirm-copy">Copiar mensaje</button><button class="btn" id="cancel-copy">Cancelar</button></div></div></div><script>
+<div class="source-accordion" data-source="hoy"><button class="source-heading" type="button" aria-expanded="false" aria-controls="sourceHoy"><span class="source-mark">🍀</span><span><strong>Según Lotería de Hoy</strong><small>Resultados independientes</small></span><span class="source-right"><span id="hoy-status">Consultando…</span><span class="source-arrow">⌄</span></span></button><section id="sourceHoy" class="hero source-content" hidden><div class="latest" id="hoy-latest"><div class="empty-state">Consultando resultados…</div></div></section></div><div class="small-tools"><button class="btn" id="notifications" type="button">🔔 Activar avisos</button><span id="next-draw" class="mini-meta">Próximo sorteo: calculando…</span></div><div class="toolbar"><h2>Todas las loterías</h2><div class="filters"><input id="search" class="search" placeholder="⌕ Buscar lotería…" aria-label="Buscar lotería"/><button class="btn" id="expand">Abrir todas</button></div></div><div class="tabs"><button class="tab active" data-filter="all">Todas</button><button class="tab" data-filter="favorite">★ Favoritas</button></div><section id="groups" class="groups"><div class="empty-state">Cargando loterías…</div></section><div class="foot">Fuentes independientes: resultados365.com, lotoven.com/animalitos/ y loteriadehoy.com/animalitos/resultados/. Agencia Selena no es una página oficial de las loterías. Verifica los resultados antes de utilizarlos.</div></main><div id="toast" class="toast" role="status"></div><div id="copy-dialog" class="dialog-screen" hidden style="display:none"><div class="dialog-panel" role="dialog" aria-modal="true" aria-label="Vista previa del mensaje"><strong>Vista previa de favoritos</strong><p class="mini-meta">Puedes revisar y editar el mensaje antes de copiarlo.</p><textarea id="copy-preview"></textarea><div class="small-tools"><button class="btn green" id="confirm-copy">Copiar mensaje</button><button class="btn" id="cancel-copy">Cancelar</button></div></div></div><script>
 const state={logos:{},items:[],lotoven:[],hoy:[],pins:new Set(JSON.parse(localStorage.getItem('selena-pins-v1')||'[]')),favorites:new Set(JSON.parse(localStorage.getItem('selena-favs-v4')||'[]')),open:new Set(),filter:'all',lastDate:'',headFast:new Map(),headReceived:new Set(),refreshCycle:0};
 const $=id=>document.getElementById(id);const fmtDate=d=>`${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
 $('date').textContent=fmtDate(new Date());const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -238,9 +238,21 @@ function pinnedResults(gs){return gs.filter(g=>state.pins.has(normalize(g.name))
  if(fast&&lotteryKey(fast.loteria)===key)return fast;
  return g.items.slice().sort((a,b)=>parseHour(b.hora)-parseHour(a.hora))[0];
 }).filter(Boolean)}
-function render(){const gs=groupData();const latest=latestFive(state.items);$('latest').innerHTML=latest.length?latest.map(r=>drawCard(r)).join(''):'<div class="empty-state">Sin resultados de 365 para las loterías seleccionadas.</div>'; $('lotoven-latest').innerHTML=state.lotoven.length?latestFive(state.lotoven).map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay resultados disponibles de Lotoven.</div>'; $('hoy-latest').innerHTML=state.hoy.length?latestFive(state.hoy).map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay resultados disponibles de Lotería de Hoy.</div>'; const pinned=pinnedResults(gs);$('featured').innerHTML=pinned.length?pinned.map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay loterías fijadas todavía. Pulsa 📌 junto al título de una lotería.</div>';$('intermedias').innerHTML=intermediateResults().length?intermediateResults().map(r=>drawCard(r)).join(''):'<div class="empty-state">Todavía no hay resultados de las cuatro loterías intermedias.</div>'; 
+function patchHTML(node,html){
+ if(node.dataset.renderHTML===html)return;
+ const template=document.createElement('template');template.innerHTML=html;
+ const old=[...node.children],used=new Set();
+ for(const next of [...template.content.children]){
+  const same=old.find(child=>!used.has(child)&&(child._renderHTML||child.outerHTML)===next.outerHTML);
+  const chosen=same||next;chosen._renderHTML=next.outerHTML;used.add(chosen);
+  node.appendChild(chosen);
+ }
+ for(const child of old)if(!used.has(child))child.remove();
+ node.dataset.renderHTML=html;
+}
+function render(){const gs=groupData();const latest=latestFive(state.items);patchHTML($('latest'),latest.length?latest.map(r=>drawCard(r)).join(''):'<div class="empty-state">Sin resultados de 365 para las loterías seleccionadas.</div>'); patchHTML($('lotoven-latest'),state.lotoven.length?latestFive(state.lotoven).map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay resultados disponibles de Lotoven.</div>'); patchHTML($('hoy-latest'),state.hoy.length?latestFive(state.hoy).map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay resultados disponibles de Lotería de Hoy.</div>'); const pinned=pinnedResults(gs);patchHTML($('featured'),pinned.length?pinned.map(r=>drawCard(r)).join(''):'<div class="empty-state">No hay loterías fijadas todavía. Pulsa 📌 junto al título de una lotería.</div>');patchHTML($('intermedias'),intermediateResults().length?intermediateResults().map(r=>drawCard(r)).join(''):'<div class="empty-state">Todavía no hay resultados de las cuatro loterías intermedias.</div>'); 
 const q=normalize($('search').value);let visible=gs.filter(g=>normalize(g.name).includes(q)&& (state.filter==='all'||g.items.some(hasFav)));
-$('groups').innerHTML=visible.length?visible.map((g,i)=>{const key=normalize(g.name),open=state.open.has(key);return `<section class="group ${open?'open':''}"><button class="group-head" data-toggle="${escapeHTML(key)}"><div class="gname"><div class="gicon logo-thumbnail">${logoForLottery(g.name)}</div><div>${escapeHTML(g.name)}<div class="gmeta">${g.items.length} sorteos disponibles · ${escapeHTML(fmtDate(new Date()))}</div></div></div><div class="group-actions"><span class="chevron">⌄</span></div></button><button type="button" class="pin-btn ${state.pins.has(key)?'active':''}" data-pin="${escapeHTML(key)}" title="${state.pins.has(key)?'Quitar del encabezado':'Mostrar último sorteo en el encabezado'}" aria-label="${state.pins.has(key)?'Quitar':'Fijar'} ${escapeHTML(g.name)}" aria-pressed="${state.pins.has(key)?'true':'false'}">📌</button><div class="group-body"><div class="draws">${g.items.map(r=>`<div class="draw"><div class="time">${escapeHTML(displayHour(r.hora))}</div><div class="animal-icon" style="width:43px;height:43px;font-size:22px;margin:7px auto">${animalPicture(r)}</div><div class="num">${escapeHTML(r.numero)}</div><div class="name">${escapeHTML(r.animal)}</div><button class="star ${hasFav(r)?'active':''}" data-fav="${escapeHTML(favoriteKey(r))}" style="border:0;background:none;color:${hasFav(r)?'#f7c948':'#79909a'};font-size:20px;margin-top:9px" title="Favorito">${hasFav(r)?'★':'☆'}</button></div>`).join('')}</div></div></section>`}).join(''):'<div class="empty-state">No se encontraron loterías para esta búsqueda.</div>';renderSourceStatuses();}
+patchHTML($('groups'),visible.length?visible.map((g,i)=>{const key=normalize(g.name),open=state.open.has(key);return `<section class="group ${open?'open':''}"><button class="group-head" data-toggle="${escapeHTML(key)}"><div class="gname"><div class="gicon logo-thumbnail">${logoForLottery(g.name)}</div><div>${escapeHTML(g.name)}<div class="gmeta">${g.items.length} sorteos disponibles · ${escapeHTML(fmtDate(new Date()))}</div></div></div><div class="group-actions"><span class="chevron">⌄</span></div></button><button type="button" class="pin-btn ${state.pins.has(key)?'active':''}" data-pin="${escapeHTML(key)}" title="${state.pins.has(key)?'Quitar del encabezado':'Mostrar último sorteo en el encabezado'}" aria-label="${state.pins.has(key)?'Quitar':'Fijar'} ${escapeHTML(g.name)}" aria-pressed="${state.pins.has(key)?'true':'false'}">📌</button><div class="group-body"><div class="draws">${g.items.map(r=>`<div class="draw"><div class="time">${escapeHTML(displayHour(r.hora))}</div><div class="animal-icon" style="width:43px;height:43px;font-size:22px;margin:7px auto">${animalPicture(r)}</div><div class="num">${escapeHTML(r.numero)}</div><div class="name">${escapeHTML(r.animal)}</div><button class="star ${hasFav(r)?'active':''}" data-fav="${escapeHTML(favoriteKey(r))}" style="border:0;background:none;color:${hasFav(r)?'#f7c948':'#79909a'};font-size:20px;margin-top:9px" title="Favorito">${hasFav(r)?'★':'☆'}</button></div>`).join('')}</div></div></section>`}).join(''):'<div class="empty-state">No se encontraron loterías para esta búsqueda.</div>');renderSourceStatuses();}
 document.addEventListener('click',e=>{const sh=e.target.closest('.source-heading');if(sh){const panel=document.getElementById(sh.getAttribute('aria-controls'));const next=sh.getAttribute('aria-expanded')!=='true';sh.setAttribute('aria-expanded',String(next));panel.hidden=!next;return}let p=e.target.closest('[data-pin]');if(p){let key=p.dataset.pin;state.pins.has(key)?state.pins.delete(key):state.pins.add(key);localStorage.setItem('selena-pins-v1',JSON.stringify([...state.pins]));render();return}let b=e.target.closest('[data-fav]');if(b){const key=b.dataset.fav;if(state.favorites.has(key))state.favorites.delete(key);else state.favorites.add(key);save();render();return}b=e.target.closest('[data-toggle]');if(b){let key=b.dataset.toggle;state.open.has(key)?state.open.delete(key):state.open.add(key);render()}});
 $('search').addEventListener('input',render);document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{state.filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(t=>t.classList.toggle('active',t===b));render()});$('expand').onclick=()=>{const gs=groupData();if(gs.every(g=>state.open.has(normalize(g.name)))){state.open.clear();$('expand').textContent='Abrir todas'}else{gs.forEach(g=>state.open.add(normalize(g.name)));$('expand').textContent='Cerrar todas'}render()};
 async function copyGroupFavorites(group){
@@ -272,8 +284,19 @@ async function copyGroupFavorites(group){
 }
 $('share-hourly').onclick=()=>copyGroupFavorites('hourly');
 $('share-intermediate').onclick=()=>copyGroupFavorites('intermediate');
-async function load(cycle=state.refreshCycle){let old=state.items.length;$('refresh').disabled=true;$('status').textContent='Consultando fuente…';try{const response=await fetch('api.php?t='+Date.now(),{cache:'no-store'});const data=await response.json();if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');state.logos=data.logos||{};let seen=new Set;state.items=data.resultados.filter(x=>x.loteria&&x.numero&&x.hora).map(x=>({...x,fuente:'365'})).filter(x=>{let k=favoriteKey(x);if(seen.has(k))return false;seen.add(k);return true});$('status').textContent=`Actualizado · ${new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'})}`;$('dot').classList.add('ok');acceptHeaderResults(state.items,cycle);assessNewDraws('365',state.items);render()}catch(e){$('status').textContent='Sin conexión con la fuente';$('dot').classList.remove('ok');if(!old)render();console.warn('Consulta de resultados:',e.message);notify('No se pudieron consultar resultados365.com. Revisa la conexión.')}finally{$('refresh').disabled=false}}async function loadLotoven(cycle=state.refreshCycle){try{const res=await fetch('api_lotoven.php?t='+Date.now(),{cache:'no-store'});const data=await res.json();if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');const seen=new Set();state.lotoven=data.resultados.filter(r=>r.loteria&&r.numero&&r.hora).map(r=>({...r,fuente:'lotoven'})).filter(r=>{const key=favoriteKey(r);if(seen.has(key))return false;seen.add(key);return true});$('lotoven-status').textContent='Actualizado · '+new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});acceptHeaderResults(state.lotoven,cycle);assessNewDraws('lotoven',state.lotoven);render()}catch(e){$('lotoven-status').textContent='Lotoven no disponible';console.warn('Error Lotoven:',e.message);render()}}
-async function loadHoy(cycle=state.refreshCycle){try{const res=await fetch('api_loteriadehoy.php?t='+Date.now(),{cache:'no-store'});const data=await res.json();if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');const seen=new Set();state.hoy=data.resultados.filter(r=>r.loteria&&r.numero&&r.hora).map(r=>({...r,fuente:'loteriadehoy'})).filter(r=>{const key=favoriteKey(r);if(seen.has(key))return false;seen.add(key);return true});$('hoy-status').textContent='Actualizado · '+new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});acceptHeaderResults(state.hoy,cycle);assessNewDraws('loteriadehoy',state.hoy);render()}catch(e){$('hoy-status').textContent='Lotería de Hoy no disponible';console.warn('Error Lotería de Hoy:',e.message);render()}}
+const resultRequests=new Map(),resultMemory=new Map();
+async function fetchResults(url){
+ const cached=resultMemory.get(url);if(cached&&Date.now()-cached.at<15000&&cached.data.fecha===caracasDate())return cached.data;
+ if(resultRequests.has(url))return resultRequests.get(url);
+ const pending=(async()=>{const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),25000);
+ try{const response=await fetch(url,{signal:controller.signal});const data=await response.json();
+ if(!response.ok||!data.ok)throw new Error(data.error||'Fuente no disponible');
+ if(data.fecha!==caracasDate()||!Array.isArray(data.resultados)||data.resultados.some(r=>r.fecha!==data.fecha))throw new Error('La fuente no tiene resultados verificados de hoy');
+ resultMemory.set(url,{at:Date.now(),data});return data;
+ }finally{clearTimeout(timer);resultRequests.delete(url);}})();resultRequests.set(url,pending);return pending;
+}
+async function load(cycle=state.refreshCycle){let old=state.items.length;$('refresh').disabled=true;$('status').textContent='Consultando fuente…';try{const data=await fetchResults('api.php');if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');state.logos=data.logos||{};let seen=new Set;state.items=data.resultados.filter(x=>x.loteria&&x.numero&&x.hora).map(x=>({...x,fuente:'365'})).filter(x=>{let k=favoriteKey(x);if(seen.has(k))return false;seen.add(k);return true});$('status').textContent=`Actualizado · ${new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'})}`;$('dot').classList.add('ok');acceptHeaderResults(state.items,cycle);assessNewDraws('365',state.items);render()}catch(e){$('status').textContent=e.message;$('dot').classList.remove('ok');if(!old)render();console.warn('Consulta de resultados:',e.message);notify('No se pudieron consultar resultados365.com. Revisa la conexión.')}finally{$('refresh').disabled=false}}async function loadLotoven(cycle=state.refreshCycle){try{const data=await fetchResults('api_lotoven.php');if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');const seen=new Set();state.lotoven=data.resultados.filter(r=>r.loteria&&r.numero&&r.hora).map(r=>({...r,fuente:'lotoven'})).filter(r=>{const key=favoriteKey(r);if(seen.has(key))return false;seen.add(key);return true});$('lotoven-status').textContent='Actualizado · '+new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});acceptHeaderResults(state.lotoven,cycle);assessNewDraws('lotoven',state.lotoven);render()}catch(e){$('lotoven-status').textContent='Lotoven: '+e.message;console.warn('Error Lotoven:',e.message);render()}}
+async function loadHoy(cycle=state.refreshCycle){try{const data=await fetchResults('api_loteriadehoy.php');if(cycle!==state.refreshCycle)return;if(!data.ok||!Array.isArray(data.resultados))throw new Error(data.error||'Respuesta inválida');const seen=new Set();state.hoy=data.resultados.filter(r=>r.loteria&&r.numero&&r.hora).map(r=>({...r,fuente:'loteriadehoy'})).filter(r=>{const key=favoriteKey(r);if(seen.has(key))return false;seen.add(key);return true});$('hoy-status').textContent='Actualizado · '+new Date().toLocaleTimeString('es-VE',{hour:'2-digit',minute:'2-digit'});acceptHeaderResults(state.hoy,cycle);assessNewDraws('loteriadehoy',state.hoy);render()}catch(e){$('hoy-status').textContent='Lotería de Hoy: '+e.message;console.warn('Error Lotería de Hoy:',e.message);render()}}
 
 // Datos nuevos: tono solo después de la primera actualización y permiso expreso del usuario.
 let soundEnabled=localStorage.getItem('selena-sound')==='yes';let initialLoads=new Set();const previousDraws=new Map();
@@ -281,125 +304,13 @@ $('notifications').textContent=soundEnabled?'🔔 Sonido activado':'🔕 Activar
 $('notifications').onclick=()=>{soundEnabled=!soundEnabled;localStorage.setItem('selena-sound',soundEnabled?'yes':'no');$('notifications').textContent=soundEnabled?'🔔 Sonido activado':'🔕 Activar sonido';notify(soundEnabled?'Sonidos activados.':'Sonidos desactivados.')};
 function beep(){if(!soundEnabled)return;try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.value=830;gain.gain.setValueAtTime(.06,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.23);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.24);osc.onended=()=>ctx.close()}catch(e){console.debug(e)}}
 function assessNewDraws(source,items){const current=new Map(items.map(r=>[`${normalize(r.loteria)}|${r.hora}`,String(r.numero)]));if(initialLoads.has(source)){const changed=[...current].filter(([k,v])=>previousDraws.has(`${source}|${k}`)&&previousDraws.get(`${source}|${k}`)!==v);const fresh=[...current].filter(([k,v])=>!previousDraws.has(`${source}|${k}`));if(changed.length||fresh.length){beep();notify(`${changed.length+fresh.length} resultado(s) nuevo(s) en ${source}`)}}for(const [k,v] of current)previousDraws.set(`${source}|${k}`,v);initialLoads.add(source)}
-function updateCountdown(){const now=new Date();const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Caracas',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);const num=k=>Number(parts.find(x=>x.type===k)?.value||0);const remaining=3600-((num('minute')*60+num('second'))%3600);$('next-draw').textContent=`⏳ Próxima hora: ${Math.floor(remaining/60)}m ${String(remaining%60).padStart(2,'0')}s (hora Venezuela)`}updateCountdown();setInterval(updateCountdown,1000);
+function updateCountdown(){if(state.lastDate&&state.lastDate!==caracasDate()){startRefreshCycle();render();}const now=new Date();const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Caracas',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(now);const num=k=>Number(parts.find(x=>x.type===k)?.value||0);const remaining=3600-((num('minute')*60+num('second'))%3600);$('next-draw').textContent=`⏳ Próxima hora: ${Math.floor(remaining/60)}m ${String(remaining%60).padStart(2,'0')}s (hora Venezuela)`}updateCountdown();setInterval(updateCountdown,1000);
 function showPreview(msg){$('copy-preview').value=msg;$('copy-dialog').hidden=false;$('copy-dialog').style.display='flex'}
 $('cancel-copy').onclick=()=>{$('copy-dialog').style.display='none'};
 $('confirm-copy').onclick=async()=>{const msg=$('copy-preview').value;try{await navigator.clipboard.writeText(msg);notify('Mensaje copiado correctamente')}catch(e){$('copy-preview').select();document.execCommand('copy');notify('Mensaje seleccionado/copiedo')} $('copy-dialog').style.display='none'};
-async function checkHistory(){try{const x=await fetch('historial.php?limit=1',{cache:'no-store'});const v=await x.json();$('db-status').textContent=v.ok?'🗄️ Historial MySQL activo':'🗄️ Historial opcional: configura MySQL'}catch(e){$('db-status').textContent='🗄️ Historial MySQL no disponible'}}checkHistory();
+
 
 function refreshAll(){const cycle=startRefreshCycle();load(cycle);loadLotoven(cycle);loadHoy(cycle)}$('refresh').onclick=refreshAll;refreshAll();let pollTimer;function schedulePoll(){const d=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Caracas',minute:'2-digit'}).format(new Date());const m=Number(d);const sec=(m>=57||m<=9)?30000:90000;pollTimer=setTimeout(()=>{if(!document.hidden)refreshAll();schedulePoll()},sec)}schedulePoll();document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAll()});
-</script><script>(function(){
-  'use strict';
-  const input=document.getElementById('calcInput');
-  const totalEl=document.getElementById('calcTotal');
-  const countEl=document.getElementById('calcCount');
-  const details=document.getElementById('calcBreakdown');
-  const warnings=document.getElementById('calcWarnings');
-  const money=v=>'Bs '+v.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});
-  function parseMoney(s){
-    s=s.trim().replace(/\s/g,'');
-    if(s.includes(',')&&s.includes('.')){
-      const lastComma=s.lastIndexOf(',')>s.lastIndexOf('.');
-      s=lastComma?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'');
-    }else if(s.includes(',')){
-      const bits=s.split(',');s=bits.length===2&&bits[1].length===3?s.replace(/,/g,''):s.replace(',','.');
-    }else if(/^\d{1,3}(?:\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
-    return Number(s);
-  }
-  const cleanPlayText=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
-  const lotteryAliases=[
-    ['INT',/^(?:(?:lotto?|loto)\s*(?:activo\s*)?(?:rd\s*)?(?:int(?:ernacional)?|inter)|inter|int)(?=$|[\s,;:/+&|.-])/],
-    ['RD',/^(?:(?:lotto?|loto)\s*(?:activo\s*)?(?:r\.?\s*d\.?|rdominicana|republica\s+dominicana)|rd)(?=$|[\s,;:/+&|.-])/],
-    ['GM',/^(?:granja\s*millonaria|gm)(?=$|[\s,;:/+&|.-])/],
-    ['Chaima',/^(?:(?:lotto?|loto)\s*chaima|chaima)(?=$|[\s,;:/+&|.-])/],
-    ['Guacharito',/^(?:el\s+)?guacharito(?:\s+millonario)?(?=$|[\s,;:/+&|.-])/],
-    ['Guácharo',/^guacharo(?:\s*activo)?(?=$|[\s,;:/+&|.-])/],
-    ['Selva',/^selva(?:\s*plus)?(?=$|[\s,;:/+&|.-])/],
-    ['Cóndor',/^condor(?:\s*gana)?(?=$|[\s,;:/+&|.-])/],
-    ['Tropi',/^(?:tropi(?:\s*gana)?|topi\s*gana)(?=$|[\s,;:/+&|.-])/],
-    ['Monje',/^monje(?:\s*millonario)?(?=$|[\s,;:/+&|.-])/],
-    ['Granja',/^(?:la\s+)?granj(?:a|ita)(?=$|[\s,;:/+&|.-])/],
-    ['Loto',/^(?:(?:lotto?|loto)(?:\s*activo)?|activo)(?=$|[\s,;:/+&|.-])/]
-  ];
-  function lotteryPrefix(text){
-    let rest=cleanPlayText(text).replace(/^para\b[\s:,-]*/,'');
-    const names=[];
-    while(rest){
-      let matched=false;
-      for(const [name,pattern] of lotteryAliases){
-        const m=rest.match(pattern);if(!m)continue;
-        names.push(name);rest=rest.slice(m[0].length).replace(/^[\s,;:/+&|.-]+/,'').replace(/^(?:y|e|para)\b[\s,;:/+&|.-]*/,'');
-        matched=true;break;
-      }
-      if(!matched)break;
-    }
-    return {names:[...new Set(names)],rest};
-  }
-  function lotteryNames(text){const parsed=lotteryPrefix(text);return parsed.names.length&&!parsed.rest?parsed.names:null;}
-  const animalNames=["Caballito de mar","Oso hormiguero","Erizo de mar","Puercoespín","Rinoceronte","Hormiguero","Hipopótamo","Murciélago","Escarabajo","Guacharito","Pavo real","Cachicamo","Guacamaya","Cucaracha","Cocodrilo","Serpiente","Elefante","Mariposa","Chigüire","Pelícano","Camaleón","Cangrejo","Avestruz","Guácharo","Pingüino","Antílope","Morrocoy","Ciempiés","Caballo","Camello","Gallina","Ardilla","Pescado","Culebra","Tortuga","Lechuza","Canguro","Canario","Caracol","Tiburón","Hormiga","Pantera","Gavilán","Bisonte","Turpial","Calamar","Camarón","Hámster","Anguila","Gaviota","Carnero","Alacrán","Ballena","Cochino","Delfín","Paloma","Iguana","Zamuro","Caimán","Venado","Jirafa","Búfalo","Avispa","Pereza","Grillo","Jaguar","Conejo","Gorila","Cuervo","Paujil","Perico","Águila","Tigre","Zorro","Burro","Chivo","Cerdo","Gallo","Cebra","Perro","Tucán","Garza","Pulpo","Panda","Araña","Cabra","Hurón","Cisne","Ratón","Gato","Mono","Pavo","Vaca","Lapa","Puma","Pato","Lobo","Búho","Buey","Loro","Toro","León","Rana","Oso","Pez"];
-  function playSelections(text){
-    let rest=cleanPlayText(text),selections=[];
-    while(rest){
-      rest=rest.replace(/^[\s,;:/+&|.-]+/,'').replace(/^y\b\s*/,'');if(!rest)break;
-      const numeric=rest.match(/^\d{1,2}(?=$|[\s,;:/+&|.-])/);
-      if(numeric){selections.push(numeric[0]);rest=rest.slice(numeric[0].length);continue;}
-      const name=animalNames.find(name=>{const key=cleanPlayText(name);return rest===key||(rest.startsWith(key)&&/[\s,;:/+&|.-]/.test(rest[key.length]));});
-      if(!name)return null;
-      selections.push(name);rest=rest.slice(cleanPlayText(name).length);
-    }
-    return selections.length?selections:null;
-  }
-  function update(){
-    let sumCents=0,amountOfNumbers=0,valid=0,bets=0,groups=0;
-    let lotteries=[],previousWasHeader=false,blocked=false,previousSelections=[];
-    details.replaceChildren();const ignored=new Set();
-    input.value.split(/\r?\n/).forEach((line,i)=>{
-      let rest=line.trim();if(!rest)return;
-      if(!/(?:[x×]|\bpor\b)/i.test(rest)){
-        const names=lotteryNames(rest);
-        if(names){lotteries=previousWasHeader?[...new Set([...lotteries,...names])]:names;previousWasHeader=true;blocked=false;}
-        else{ignored.add(i+1);previousWasHeader=false;blocked=true;previousSelections=[];}
-        return;
-      }
-      let lineCents=0,lineGroups=0;
-      while(rest){
-        rest=rest.replace(/^[\s;,|]+/,'');if(!rest)break;
-        const match=rest.match(/^([\s\S]*?)(?:[x×]|\bpor\b)\s*(?:Bs\.?\s*)?(\d+(?:[.,]\d+)*)(?=$|[\s;,|])/i);
-        if(!match){ignored.add(i+1);break;}
-        rest=rest.slice(match[0].length);
-        const prefix=lotteryPrefix(match[1]);
-        if(prefix.names.length){lotteries=prefix.names;blocked=false;}
-        let selections=playSelections(prefix.rest);
-        const inherited=prefix.names.length&&!prefix.rest&&previousSelections.length>0;
-        if(inherited)selections=previousSelections.slice();
-        previousWasHeader=false;
-        if(blocked||!selections){ignored.add(i+1);blocked=true;previousSelections=[];continue;}
-        const amount=parseMoney(match[2]),cents=Math.round(amount*100);
-        if(!Number.isFinite(amount)||amount<=0||!Number.isSafeInteger(cents)){ignored.add(i+1);continue;}
-        const count=Math.max(1,lotteries.length),subCents=selections.length*cents*count;
-        if(!Number.isSafeInteger(sumCents+subCents)){ignored.add(i+1);continue;}
-        previousSelections=selections.slice();
-        sumCents+=subCents;lineCents+=subCents;amountOfNumbers+=selections.length;bets+=selections.length*count;groups++;lineGroups++;
-        const el=document.createElement('div');el.className='calc-row';
-        const label=lotteries.length?lotteries.join(' + '):'Sin lotería indicada';
-        el.textContent=label+' · '+selections.join(', ')+' · '+selections.length+' selecciones × '+money(cents/100)+' × '+count+' '+(count===1?'lotería':'loterías')+' = '+money(subCents/100)+(inherited?' (mismos animalitos o números del grupo anterior)':'');
-        details.append(el);
-      }
-      if(lineGroups){
-        valid++;
-        if(lineGroups>1){const subtotal=document.createElement('div');subtotal.className='calc-row';subtotal.textContent='Subtotal línea '+(i+1)+': '+money(lineCents/100);details.append(subtotal);}
-      }
-    });
-    totalEl.textContent=money(sumCents/100);
-    countEl.textContent=amountOfNumbers+' selecciones · '+bets+' apuestas · '+groups+' grupos · '+valid+' líneas calculadas';
-    warnings.textContent=ignored.size?'Revisar línea(s) con partes sin calcular: '+[...ignored].join(', ')+'. Hay animalitos, loterías o jugadas no reconocidas; el total incluye solo los grupos reconocidos.':'';
-  }
-  input.addEventListener('input',update);
-  document.getElementById('calcClear').addEventListener('click',()=>{input.value='';update();input.focus();});
-  update();
-})();
+</script><script src="calculadora.js?v=20261021-opt"></script></body></html>
 
-const calcDisclosure=document.getElementById('calculator-disclosure');
-calcDisclosure.addEventListener('toggle',()=>{if(calcDisclosure.open)document.getElementById('calcInput').focus();});
-</script></body></html>
 
