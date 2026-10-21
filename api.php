@@ -9,7 +9,7 @@ if (!extension_loaded('curl') || !class_exists('DOMDocument')) reply(['ok'=>fals
 $source='https://resultados365.com/resultados/';
 $ch=curl_init($source);
 curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_FOLLOWLOCATION=>true,CURLOPT_MAXREDIRS=>3,CURLOPT_TIMEOUT=>16,CURLOPT_CONNECTTIMEOUT=>8,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_USERAGENT=>'Mozilla/5.0 (compatible; SelenaResultados/1.0; +local-dashboard)',CURLOPT_HTTPHEADER=>['Accept: text/html','Cache-Control: no-cache'],CURLOPT_ENCODING=>'']);
-$html=curl_exec($ch); $error=curl_error($ch); $http=curl_getinfo($ch,CURLINFO_HTTP_CODE); curl_close($ch);
+$html=curl_exec($ch); $error=curl_error($ch); $http=curl_getinfo($ch,CURLINFO_HTTP_CODE); 
 if(!$html || $http!==200) reply(['ok'=>false,'error'=>'No se pudo consultar Resultados365 (HTTP '.$http.'). '.$error],502);
 libxml_use_internal_errors(true);
 $dom=new DOMDocument(); $dom->loadHTML('<?xml encoding="utf-8"?>'.$html); libxml_clear_errors();
