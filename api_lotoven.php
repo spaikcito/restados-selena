@@ -12,7 +12,7 @@ if(!$html||$http!==200)answer(['ok'=>false,'error'=>'Lotoven no respondió corre
 libxml_use_internal_errors(true);$dom=new DOMDocument();$dom->loadHTML('<?xml encoding="utf-8"?>'.$html);libxml_clear_errors();
 $xp=new DOMXPath($dom);
 function normtxt($v){return trim(preg_replace('/\s+/u',' ',html_entity_decode($v,ENT_QUOTES|ENT_HTML5,'UTF-8')));}
-function canonical($v){$v=mb_strtolower(trim($v),'UTF-8');$v=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v);$v=preg_replace('/[^a-z0-9]/','',$v);if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita') && !str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'chaima'))return 'LotoChaima';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
+function canonical($v){$v=mb_strtolower(trim($v),'UTF-8');$v=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v);$v=preg_replace('/[^a-z0-9]/','',$v);if(preg_match('/activord(?:int|inter)/',$v))return 'Loto Activo RD INT';if($v==='selvaplus')return 'SelvaPlus';if(str_contains($v,'monjemillonario'))return 'Monje Millonario';if(str_contains($v,'guacharito'))return 'Guacharito';if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita') && !str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'chaima'))return 'LotoChaima';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
 // Cada cabecera «Resultados ...» delimita el bloque de una sola lotería.
 // Solo se leen sus propios descendientes y hermanos hasta el siguiente título.
 $headers=$xp->query('//h2|//h3|//h4');$found=[];
@@ -51,7 +51,7 @@ foreach($xp->query('//img[@alt]') as $img){
   $alt=normtxt($img->getAttribute('alt'));
   if(!preg_match('/^Animalito\s+(.+?)\s+([\p{L}][\p{L}\s-]*)$/iu',$alt,$mm))continue;
   $lot=null;$animalFromAlt='';
-  foreach(['Lotto Activo RDominicana','Lotto Activo RD Int','Guacharo Activo','Lotto Activo','La Granjita','Loto Chaima'] as $candidate){
+  foreach(['Lotto Activo RDominicana','Lotto Activo RD Int','Lotto Activo 2 (Monje Millonario)','El Guacharito Millonario','Selva Plus','Guacharo Activo','Lotto Activo','La Granjita','Loto Chaima'] as $candidate){
     $prefix='Animalito '.$candidate.' ';
     if(mb_strtolower(mb_substr($alt,0,mb_strlen($prefix)))===mb_strtolower($prefix)){
       $lot=canonical($candidate);$animalFromAlt=trim(mb_substr($alt,mb_strlen($prefix)));break;
@@ -88,3 +88,4 @@ foreach($found as &$entry){
 }unset($entry);
 if(!$found)answer(['ok'=>false,'error'=>'Lotoven respondió pero su estructura no permitió extraer los sorteos. No se mostrarán valores de otra fuente.'],502);
 answer(['ok'=>true,'fuente'=>$url,'resultados'=>array_values($found),'cantidad'=>count($found),'consultado_en'=>gmdate('c')]);
+

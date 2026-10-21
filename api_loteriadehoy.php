@@ -14,7 +14,7 @@ libxml_use_internal_errors(true);$dom=new DOMDocument();$dom->loadHTML('<?xml en
 $xp=new DOMXPath($dom);
 function txt($s){return trim(preg_replace('/\s+/u',' ',html_entity_decode($s,ENT_QUOTES|ENT_HTML5,'UTF-8')));}
 function normalized($s){$s=mb_strtolower($s,'UTF-8');$s=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$s);return preg_replace('/[^a-z0-9]/','',$s);}
-function lotteryName($s){$v=normalized($s);if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita')&&!str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'chaima'))return 'LotoChaima';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
+function lotteryName($s){$v=normalized($s);if(preg_match('/activord(?:int|inter)/',$v))return 'Loto Activo RD INT';if($v==='selvaplus')return 'SelvaPlus';if(str_contains($v,'monjemillonario'))return 'Monje Millonario';if(str_contains($v,'guacharito'))return 'Guacharito';if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita')&&!str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'chaima'))return 'LotoChaima';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
 function imageURL($node){if(!$node)return '';foreach(['data-original','data-src','src'] as $key){$src=trim($node->getAttribute($key));if(!$src)continue;if(str_starts_with($src,'//'))$src='https:'.$src;elseif(str_starts_with($src,'/'))$src='https://loteriadehoy.com'.$src;$parts=parse_url($src);if($parts && ($parts['scheme']??'')==='https' && in_array(strtolower($parts['host']??''),['loteriadehoy.com','www.loteriadehoy.com'],true))return $src;}return '';}
 // La página utiliza un h3 por lotería, h4 con número/animal y h5 con la hora.
 $current=null;$pending=null;$results=[];$lastImg='';
@@ -40,3 +40,4 @@ foreach($xp->query('//h3|//h4|//h5|//img') as $node){
 }
 if(!$results)respond(['ok'=>false,'error'=>'La página respondió pero no se pudieron leer resultados. Su estructura puede haber cambiado.'],502);
 respond(['ok'=>true,'fuente'=>$url,'resultados'=>array_values($results),'cantidad'=>count($results),'consultado_en'=>gmdate('c')]);
+
