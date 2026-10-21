@@ -150,7 +150,7 @@
 .calculator-chevron{font-size:20px;transition:transform .2s}
 .calculator-disclosure[open] .calculator-chevron{transform:rotate(180deg)}
 .calculator-disclosure>.calc-panel{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:16px}
-</style><link rel="icon" type="image/png" sizes="48x48" href="favicon.png"><link rel="shortcut icon" href="favicon.ico"><link rel="apple-touch-icon" href="favicon.png"></head><body><main class="shell"><header class="top"><div class="brand"><div class="brand-icon"><img src="logo_agencia_selena.png" alt="Logo Agencia Selena" width="48" height="48"></div><div><strong>Agencia Selena</strong><small>Resultados de animalitos · Actualización automática</small></div></div><a class="header-whatsapp" href="https://wa.me/584220457432" target="_blank" rel="noopener noreferrer" aria-label="Abrir nuestro WhatsApp">☏ NUESTRO WHATSAPP</a><a class="header-whatsapp" style="background:#202c33;border:1px solid #38594e" href="verificador.php">✓ VERIFICAR TICKETS</a></header><details class="calculator-disclosure" id="calculator-disclosure"><summary><span>▦ Calculadora de jugadas</span><span class="calculator-chevron" aria-hidden="true">⌄</span></summary><section class="hero calc-panel" id="header-calculator" aria-labelledby="calcTitle"><h2 id="calcTitle">Calculadora de jugadas</h2><p class="hint">Escribe los números y el monto para calcular el total. Ejemplo: <b>loto: 25 14 x 50</b> = <b>Bs 100,00</b>; <b>loto y granja: 25 14 x 50</b> = <b>Bs 200,00</b>.</p><div class="calc-layout"><div><textarea id="calcInput" spellcheck="false" placeholder="granja 10 5 17 35 23 32 21 14 25 x 500  0 por 700&#10;loto 17 33 por 2000  5 4 22 7 27 x 200  15 por 1500"></textarea><div class="calc-help">Escribe las loterías y las jugadas en la misma línea o debajo. «por», «x» y «×» significan lo mismo. Puedes escribir varios grupos seguidos: 25 14 x 50 0 por 100. Acepta «loto», «granja», «loto y granja», «loto/granja» o «loto granja». Cada jugada se multiplica por las loterías indicadas; sin encabezado se cuenta una lotería.</div><div class="actions"><button id="calcClear" type="button">Limpiar calculadora</button></div></div><div class="calc-output"><div class="hint">TOTAL DE JUGADAS</div><div class="calc-total" id="calcTotal">Bs 0,00</div><div class="calc-help" id="calcCount">0 números · 0 líneas</div><div id="calcBreakdown" aria-live="polite"></div><div class="calc-warning" id="calcWarnings" aria-live="polite"></div></div></div></section></details><div class="section-head with-actions"><div><h2>📌 Loterías de cada hora</h2><p>Pulsa 📌 junto al título de una lotería para fijarla. Se mostrará el primer resultado válido recibido de las tres páginas en cada actualización.</p></div><div class="section-actions"><span class="status"><i class="dot" id="dot"></i><span id="status">Conectando…</span></span><button class="btn" id="refresh">↻ Actualizar</button><button class="btn green" id="share-hourly" type="button">↗ Copiar de cada hora</button></div></div><section class="hero"><div id="featured" class="featured"><div class="empty-state">No hay loterías fijadas todavía.</div></div></section><div class="section-head with-actions"><div><h2>⏱️ Intermedias</h2><p>SelvaPlus, Monje Millonario, Guacharito y Loto Activo RD INT. Se muestra el último sorteo recibido de cada lotería.</p></div><div class="section-actions"><button class="btn green" id="share-intermediate" type="button">↗ Copiar intermedias</button></div></div><section class="hero"><div id="intermedias" class="featured"><div class="empty-state">Consultando resultados de intermedias…</div></div></section><div class="source-accordion" data-source="365"><button class="source-heading" type="button" aria-expanded="false" aria-controls="source365"><span class="source-mark">🔥</span><span><strong>Según 365</strong><small>Resultados independientes</small></span><span class="source-right"><span id="date"></span><span class="source-arrow">⌄</span></span></button><section id="source365" class="hero source-content" hidden><div class="latest" id="latest"><div class="empty-state">Consultando resultados…</div></div><div class="panel-note">★ Marca favoritos para copiarlos.</div></section></div>
+</style><link rel="icon" type="image/png" sizes="48x48" href="favicon.png"><link rel="shortcut icon" href="favicon.ico"><link rel="apple-touch-icon" href="favicon.png"></head><body><main class="shell"><header class="top"><div class="brand"><div class="brand-icon"><img src="logo_agencia_selena.png" alt="Logo Agencia Selena" width="48" height="48"></div><div><strong>Agencia Selena</strong><small>Resultados de animalitos · Actualización automática</small></div></div><a class="header-whatsapp" href="https://wa.me/584220457432" target="_blank" rel="noopener noreferrer" aria-label="Abrir nuestro WhatsApp">☏ NUESTRO WHATSAPP</a><a class="header-whatsapp" style="background:#202c33;border:1px solid #38594e" href="verificador.php">✓ VERIFICAR TICKETS</a></header><details class="calculator-disclosure" id="calculator-disclosure"><summary><span>▦ Calculadora de jugadas</span><span class="calculator-chevron" aria-hidden="true">⌄</span></summary><section class="hero calc-panel" id="header-calculator" aria-labelledby="calcTitle"><h2 id="calcTitle">Calculadora de jugadas</h2><p class="hint">Escribe los números y el monto para calcular el total. Ejemplo: <b>loto: 25 14 x 50</b> = <b>Bs 100,00</b>; <b>loto y granja: 25 14 x 50</b> = <b>Bs 200,00</b>.</p><div class="calc-layout"><div><textarea id="calcInput" spellcheck="false" placeholder="granja 10 5 17 35 23 32 21 14 25 x 500  0 por 700&#10;loto 17 33 por 2000  5 4 22 7 27 x 200  15 por 1500"></textarea><div class="calc-help">Puedes escribir números o nombres de animalitos, con o sin tildes. Escribe las loterías y las jugadas en la misma línea o debajo. «por», «x» y «×» significan lo mismo. Puedes escribir varios grupos seguidos: 25 14 x 50 0 por 100. Acepta «loto», «granja», «loto y granja», «loto/granja» o «loto granja». Cada jugada se multiplica por las loterías indicadas; sin encabezado se cuenta una lotería. «Para guácharo x 500» repite las selecciones del grupo anterior con el nuevo monto.</div><div class="actions"><button id="calcClear" type="button">Limpiar calculadora</button></div></div><div class="calc-output"><div class="hint">TOTAL DE JUGADAS</div><div class="calc-total" id="calcTotal">Bs 0,00</div><div class="calc-help" id="calcCount">0 selecciones · 0 líneas</div><div id="calcBreakdown" aria-live="polite"></div><div class="calc-warning" id="calcWarnings" aria-live="polite"></div></div></div></section></details><div class="section-head with-actions"><div><h2>📌 Loterías de cada hora</h2><p>Pulsa 📌 junto al título de una lotería para fijarla. Se mostrará el primer resultado válido recibido de las tres páginas en cada actualización.</p></div><div class="section-actions"><span class="status"><i class="dot" id="dot"></i><span id="status">Conectando…</span></span><button class="btn" id="refresh">↻ Actualizar</button><button class="btn green" id="share-hourly" type="button">↗ Copiar de cada hora</button></div></div><section class="hero"><div id="featured" class="featured"><div class="empty-state">No hay loterías fijadas todavía.</div></div></section><div class="section-head with-actions"><div><h2>⏱️ Intermedias</h2><p>SelvaPlus, Monje Millonario, Guacharito y Loto Activo RD INT. Se muestra el último sorteo recibido de cada lotería.</p></div><div class="section-actions"><button class="btn green" id="share-intermediate" type="button">↗ Copiar intermedias</button></div></div><section class="hero"><div id="intermedias" class="featured"><div class="empty-state">Consultando resultados de intermedias…</div></div></section><div class="source-accordion" data-source="365"><button class="source-heading" type="button" aria-expanded="false" aria-controls="source365"><span class="source-mark">🔥</span><span><strong>Según 365</strong><small>Resultados independientes</small></span><span class="source-right"><span id="date"></span><span class="source-arrow">⌄</span></span></button><section id="source365" class="hero source-content" hidden><div class="latest" id="latest"><div class="empty-state">Consultando resultados…</div></div><div class="panel-note">★ Marca favoritos para copiarlos.</div></section></div>
 <div class="source-accordion" data-source="lotoven"><button class="source-heading" type="button" aria-expanded="false" aria-controls="sourceLotoven"><span class="source-mark">🌿</span><span><strong>Según Lotoven</strong><small>Resultados independientes</small></span><span class="source-right"><span id="lotoven-status">Consultando…</span><span class="source-arrow">⌄</span></span></button><section id="sourceLotoven" class="hero source-content hero-lotoven" hidden><div class="latest" id="lotoven-latest"><div class="empty-state">Consultando resultados…</div></div></section></div>
 <div class="source-accordion" data-source="hoy"><button class="source-heading" type="button" aria-expanded="false" aria-controls="sourceHoy"><span class="source-mark">🍀</span><span><strong>Según Lotería de Hoy</strong><small>Resultados independientes</small></span><span class="source-right"><span id="hoy-status">Consultando…</span><span class="source-arrow">⌄</span></span></button><section id="sourceHoy" class="hero source-content" hidden><div class="latest" id="hoy-latest"><div class="empty-state">Consultando resultados…</div></div></section></div><div class="small-tools"><button class="btn" id="notifications" type="button">🔔 Activar avisos</button><span id="next-draw" class="mini-meta">Próximo sorteo: calculando…</span><span id="db-status" class="mini-meta">Historial: comprobando MySQL…</span></div><div class="toolbar"><h2>Todas las loterías</h2><div class="filters"><input id="search" class="search" placeholder="⌕ Buscar lotería…" aria-label="Buscar lotería"/><button class="btn" id="expand">Abrir todas</button></div></div><div class="tabs"><button class="tab active" data-filter="all">Todas</button><button class="tab" data-filter="favorite">★ Favoritas</button></div><section id="groups" class="groups"><div class="empty-state">Cargando loterías…</div></section><div class="foot">Fuentes independientes: resultados365.com, lotoven.com/animalitos/ y loteriadehoy.com/animalitos/resultados/. Agencia Selena no es una página oficial de las loterías. Verifica los resultados antes de utilizarlos.</div></main><div id="toast" class="toast" role="status"></div><div id="copy-dialog" class="dialog-screen" hidden style="display:none"><div class="dialog-panel" role="dialog" aria-modal="true" aria-label="Vista previa del mensaje"><strong>Vista previa de favoritos</strong><p class="mini-meta">Puedes revisar y editar el mensaje antes de copiarlo.</p><textarea id="copy-preview"></textarea><div class="small-tools"><button class="btn green" id="confirm-copy">Copiar mensaje</button><button class="btn" id="cancel-copy">Cancelar</button></div></div></div><script>
 const state={logos:{},items:[],lotoven:[],hoy:[],pins:new Set(JSON.parse(localStorage.getItem('selena-pins-v1')||'[]')),favorites:new Set(JSON.parse(localStorage.getItem('selena-favs-v4')||'[]')),open:new Set(),filter:'all',lastDate:'',headFast:new Map(),headReceived:new Set(),refreshCycle:0};
@@ -306,74 +306,93 @@ function refreshAll(){const cycle=startRefreshCycle();load(cycle);loadLotoven(cy
     }else if(/^\d{1,3}(?:\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
     return Number(s);
   }
-  function lotteryNames(text){
-    let rest=text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    const found=new Set();
-    const aliases=[
-      ['Loto RD INT',/\b(?:lotto?|loto)\s*(?:activo\s*)?r\.?\s*d\.?\s*(?:int(?:ernacional)?|internacional)\b/g],
-      ['Loto RD',/\b(?:lotto?|loto)\s*(?:activo\s*)?(?:r\.?\s*d\.?|rdominicana|republica\s+dominicana)\b/g],
-      ['Guacharito',/\b(?:el\s+)?guacharito(?:\s+millonario)?\b/g],
-      ['Guacharo',/\bguacharo(?:\s*activo)?\b/g],
-      ['Selva Plus',/\bselva(?:\s*plus)?\b/g],
-      ['Monje Millonario',/\bmonje(?:\s+millonario)?\b/g],
-      ['Loto Chaima',/\b(?:loto\s*)?chaima\b/g],
-      ['Granja',/\b(?:la\s+)?granj(?:a|ita)\b/g],
-      ['Loto',/\b(?:lotto?|loto)(?:\s*activo)?\b/g]
-    ];
-    for(const [name,pattern] of aliases)rest=rest.replace(pattern,()=>{found.add(name);return ' ';});
-    rest=rest.replace(/\b(?:y|e)\b/g,'').replace(/[\s,/;&+|:.\-]+/g,'');
-    return found.size&&!rest?[...found]:null;
+  const cleanPlayText=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+  const lotteryAliases=[
+    ['INT',/^(?:(?:lotto?|loto)\s*(?:activo\s*)?(?:rd\s*)?(?:int(?:ernacional)?|inter)|inter|int)(?=$|[\s,;:/+&|.-])/],
+    ['RD',/^(?:(?:lotto?|loto)\s*(?:activo\s*)?(?:r\.?\s*d\.?|rdominicana|republica\s+dominicana)|rd)(?=$|[\s,;:/+&|.-])/],
+    ['GM',/^(?:granja\s*millonaria|gm)(?=$|[\s,;:/+&|.-])/],
+    ['Chaima',/^(?:(?:lotto?|loto)\s*chaima|chaima)(?=$|[\s,;:/+&|.-])/],
+    ['Guacharito',/^(?:el\s+)?guacharito(?:\s+millonario)?(?=$|[\s,;:/+&|.-])/],
+    ['Guácharo',/^guacharo(?:\s*activo)?(?=$|[\s,;:/+&|.-])/],
+    ['Selva',/^selva(?:\s*plus)?(?=$|[\s,;:/+&|.-])/],
+    ['Cóndor',/^condor(?:\s*gana)?(?=$|[\s,;:/+&|.-])/],
+    ['Tropi',/^(?:tropi(?:\s*gana)?|topi\s*gana)(?=$|[\s,;:/+&|.-])/],
+    ['Monje',/^monje(?:\s*millonario)?(?=$|[\s,;:/+&|.-])/],
+    ['Granja',/^(?:la\s+)?granj(?:a|ita)(?=$|[\s,;:/+&|.-])/],
+    ['Loto',/^(?:(?:lotto?|loto)(?:\s*activo)?|activo)(?=$|[\s,;:/+&|.-])/]
+  ];
+  function lotteryPrefix(text){
+    let rest=cleanPlayText(text).replace(/^para\b[\s:,-]*/,'');
+    const names=[];
+    while(rest){
+      let matched=false;
+      for(const [name,pattern] of lotteryAliases){
+        const m=rest.match(pattern);if(!m)continue;
+        names.push(name);rest=rest.slice(m[0].length).replace(/^[\s,;:/+&|.-]+/,'').replace(/^(?:y|e|para)\b[\s,;:/+&|.-]*/,'');
+        matched=true;break;
+      }
+      if(!matched)break;
+    }
+    return {names:[...new Set(names)],rest};
+  }
+  function lotteryNames(text){const parsed=lotteryPrefix(text);return parsed.names.length&&!parsed.rest?parsed.names:null;}
+  const animalNames=["Caballito de mar","Oso hormiguero","Erizo de mar","Puercoespín","Rinoceronte","Hormiguero","Hipopótamo","Murciélago","Escarabajo","Guacharito","Pavo real","Cachicamo","Guacamaya","Cucaracha","Cocodrilo","Serpiente","Elefante","Mariposa","Chigüire","Pelícano","Camaleón","Cangrejo","Avestruz","Guácharo","Pingüino","Antílope","Morrocoy","Ciempiés","Caballo","Camello","Gallina","Ardilla","Pescado","Culebra","Tortuga","Lechuza","Canguro","Canario","Caracol","Tiburón","Hormiga","Pantera","Gavilán","Bisonte","Turpial","Calamar","Camarón","Hámster","Anguila","Gaviota","Carnero","Alacrán","Ballena","Cochino","Delfín","Paloma","Iguana","Zamuro","Caimán","Venado","Jirafa","Búfalo","Avispa","Pereza","Grillo","Jaguar","Conejo","Gorila","Cuervo","Paujil","Perico","Águila","Tigre","Zorro","Burro","Chivo","Cerdo","Gallo","Cebra","Perro","Tucán","Garza","Pulpo","Panda","Araña","Cabra","Hurón","Cisne","Ratón","Gato","Mono","Pavo","Vaca","Lapa","Puma","Pato","Lobo","Búho","Buey","Loro","Toro","León","Rana","Oso","Pez"];
+  function playSelections(text){
+    let rest=cleanPlayText(text),selections=[];
+    while(rest){
+      rest=rest.replace(/^[\s,;:/+&|.-]+/,'').replace(/^y\b\s*/,'');if(!rest)break;
+      const numeric=rest.match(/^\d{1,2}(?=$|[\s,;:/+&|.-])/);
+      if(numeric){selections.push(numeric[0]);rest=rest.slice(numeric[0].length);continue;}
+      const name=animalNames.find(name=>{const key=cleanPlayText(name);return rest===key||(rest.startsWith(key)&&/[\s,;:/+&|.-]/.test(rest[key.length]));});
+      if(!name)return null;
+      selections.push(name);rest=rest.slice(cleanPlayText(name).length);
+    }
+    return selections.length?selections:null;
   }
   function update(){
     let sumCents=0,amountOfNumbers=0,valid=0,bets=0,groups=0;
-    let lotteries=[],previousWasHeader=false,blocked=false;
+    let lotteries=[],previousWasHeader=false,blocked=false,previousSelections=[];
     details.replaceChildren();const ignored=new Set();
     input.value.split(/\r?\n/).forEach((line,i)=>{
       let rest=line.trim();if(!rest)return;
       if(!/(?:[x×]|\bpor\b)/i.test(rest)){
         const names=lotteryNames(rest);
         if(names){lotteries=previousWasHeader?[...new Set([...lotteries,...names])]:names;previousWasHeader=true;blocked=false;}
-        else{ignored.add(i+1);previousWasHeader=false;blocked=true;}
+        else{ignored.add(i+1);previousWasHeader=false;blocked=true;previousSelections=[];}
         return;
       }
       let lineCents=0,lineGroups=0;
-      // Consume one numbers/operator/amount group, then continue with its remainder.
       while(rest){
         rest=rest.replace(/^[\s;,|]+/,'');if(!rest)break;
         const match=rest.match(/^([\s\S]*?)(?:[x×]|\bpor\b)\s*(?:Bs\.?\s*)?(\d+(?:[.,]\d+)*)(?=$|[\s;,|])/i);
         if(!match){ignored.add(i+1);break;}
         rest=rest.slice(match[0].length);
-        let numberText=match[1].trim();
-        const prefix=numberText.match(/^([^\d]+)(\d[\s\S]*)$/);
-        if(prefix){
-          const names=lotteryNames(prefix[1]);
-          if(!names){ignored.add(i+1);blocked=true;previousWasHeader=false;continue;}
-          lotteries=names;blocked=false;numberText=prefix[2];
-        }
+        const prefix=lotteryPrefix(match[1]);
+        if(prefix.names.length){lotteries=prefix.names;blocked=false;}
+        let selections=playSelections(prefix.rest);
+        const inherited=prefix.names.length&&!prefix.rest&&previousSelections.length>0;
+        if(inherited)selections=previousSelections.slice();
         previousWasHeader=false;
-        const numbers=numberText.replace(/[,;|\-]+/g,' ').trim().split(/\s+/).filter(Boolean);
-        if(blocked||!numbers.length||numbers.some(n=>!/^\d{1,2}$/.test(n))){ignored.add(i+1);continue;}
+        if(blocked||!selections){ignored.add(i+1);blocked=true;previousSelections=[];continue;}
         const amount=parseMoney(match[2]),cents=Math.round(amount*100);
         if(!Number.isFinite(amount)||amount<=0||!Number.isSafeInteger(cents)){ignored.add(i+1);continue;}
-        const count=Math.max(1,lotteries.length),subCents=numbers.length*cents*count;
+        const count=Math.max(1,lotteries.length),subCents=selections.length*cents*count;
         if(!Number.isSafeInteger(sumCents+subCents)){ignored.add(i+1);continue;}
-        sumCents+=subCents;lineCents+=subCents;amountOfNumbers+=numbers.length;bets+=numbers.length*count;groups++;lineGroups++;
+        previousSelections=selections.slice();
+        sumCents+=subCents;lineCents+=subCents;amountOfNumbers+=selections.length;bets+=selections.length*count;groups++;lineGroups++;
         const el=document.createElement('div');el.className='calc-row';
         const label=lotteries.length?lotteries.join(' + '):'Sin lotería indicada';
-        el.textContent=label+' · '+numbers.join(' ')+' · '+numbers.length+' números × '+money(cents/100)+' × '+count+' '+(count===1?'lotería':'loterías')+' = '+money(subCents/100);
+        el.textContent=label+' · '+selections.join(', ')+' · '+selections.length+' selecciones × '+money(cents/100)+' × '+count+' '+(count===1?'lotería':'loterías')+' = '+money(subCents/100)+(inherited?' (mismos animalitos o números del grupo anterior)':'');
         details.append(el);
       }
       if(lineGroups){
         valid++;
-        if(lineGroups>1){
-          const subtotal=document.createElement('div');subtotal.className='calc-row';
-          subtotal.textContent='Subtotal línea '+(i+1)+': '+money(lineCents/100);details.append(subtotal);
-        }
+        if(lineGroups>1){const subtotal=document.createElement('div');subtotal.className='calc-row';subtotal.textContent='Subtotal línea '+(i+1)+': '+money(lineCents/100);details.append(subtotal);}
       }
     });
     totalEl.textContent=money(sumCents/100);
-    countEl.textContent=amountOfNumbers+' números · '+bets+' apuestas · '+groups+' grupos · '+valid+' líneas calculadas';
-    warnings.textContent=ignored.size?'Revisar línea(s) con partes sin calcular: '+[...ignored].join(', ')+'. El total incluye únicamente los grupos reconocidos.':'';
+    countEl.textContent=amountOfNumbers+' selecciones · '+bets+' apuestas · '+groups+' grupos · '+valid+' líneas calculadas';
+    warnings.textContent=ignored.size?'Revisar línea(s) con partes sin calcular: '+[...ignored].join(', ')+'. Hay animalitos, loterías o jugadas no reconocidas; el total incluye solo los grupos reconocidos.':'';
   }
   input.addEventListener('input',update);
   document.getElementById('calcClear').addEventListener('click',()=>{input.value='';update();input.focus();});
