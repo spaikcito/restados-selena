@@ -8,7 +8,7 @@ require_once __DIR__.'/source_common.php';
 function reply($body,$status=200){selena_emit($body,$status);}
 selena_cache_start('365');
 if (!extension_loaded('curl') || !class_exists('DOMDocument')) reply(['ok'=>false,'error'=>'Activa las extensiones curl y dom de PHP en XAMPP.'],500);
-$source='https://resultados365.com/resultados/';
+$source='https://resultados365.com/';
 $ch=curl_init($source);
 curl_setopt_array($ch,[CURLOPT_RETURNTRANSFER=>true,CURLOPT_FOLLOWLOCATION=>true,CURLOPT_MAXREDIRS=>3,CURLOPT_TIMEOUT=>16,CURLOPT_CONNECTTIMEOUT=>8,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_USERAGENT=>'Mozilla/5.0 (compatible; SelenaResultados/1.0; +local-dashboard)',CURLOPT_HTTPHEADER=>['Accept: text/html','Cache-Control: no-cache'],CURLOPT_ENCODING=>'']);
 $html=curl_exec($ch); $error=curl_error($ch); $http=curl_getinfo($ch,CURLINFO_HTTP_CODE); 
