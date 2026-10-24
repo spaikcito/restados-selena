@@ -11,6 +11,7 @@ Las tres páginas externas son agregadores: una descarga de cada página permite
 3. Vincula la base a este proyecto y al entorno Production. La integración debe agregar estas variables privadas:
    - `UPSTASH_REDIS_REST_URL`
    - `UPSTASH_REDIS_REST_TOKEN` (token con escritura, no el token de solo lectura)
+   También se acepta el par `KV_REST_API_URL` y `KV_REST_API_TOKEN` que algunas instalaciones de Vercel generan por defecto.
 4. Crea un despliegue nuevo para que las Functions reciban las variables.
 
 No pegues credenciales en GitHub, en JavaScript ni en capturas. No hace falta ejecutar SQL: Redis crea sus claves al guardar la primera consulta correcta.

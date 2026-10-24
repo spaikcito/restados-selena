@@ -1,12 +1,16 @@
 <?php
 // Upstash Redis REST: credenciales únicamente en variables privadas de Vercel.
-function selena_store_configured(){return (bool)(getenv('UPSTASH_REDIS_REST_URL')&&getenv('UPSTASH_REDIS_REST_TOKEN'));}
+function selena_store_settings(){
+ foreach([['UPSTASH_REDIS_REST_URL','UPSTASH_REDIS_REST_TOKEN'],['KV_REST_API_URL','KV_REST_API_TOKEN']] as [$url,$token])if(getenv($url)&&getenv($token))return ['url'=>getenv($url),'token'=>getenv($token)];
+ return null;
+}
+function selena_store_configured(){return selena_store_settings()!==null;}
 function selena_store_command($command,$transaction=false){
- $url=rtrim((string)getenv('UPSTASH_REDIS_REST_URL'),'/');
+ $settings=selena_store_settings();$url=rtrim((string)($settings['url']??''),'/');
  $parts=parse_url($url);
  if(!selena_store_configured()||!extension_loaded('curl')||!$parts||($parts['scheme']??'')!=='https'||!preg_match('/(?:^|\.)upstash\.io$/i',$parts['host']??'')||isset($parts['user'])||isset($parts['pass'])||isset($parts['query']))throw new RuntimeException('Historial no conectado');
  $ch=curl_init($url.($transaction?'/multi-exec':''));
- curl_setopt_array($ch,[CURLOPT_POST=>true,CURLOPT_RETURNTRANSFER=>true,CURLOPT_CONNECTTIMEOUT=>1,CURLOPT_TIMEOUT=>2,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_HTTPHEADER=>['Authorization: Bearer '.getenv('UPSTASH_REDIS_REST_TOKEN'),'Content-Type: application/json'],CURLOPT_POSTFIELDS=>json_encode($command,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)]);
+ curl_setopt_array($ch,[CURLOPT_POST=>true,CURLOPT_RETURNTRANSFER=>true,CURLOPT_CONNECTTIMEOUT=>1,CURLOPT_TIMEOUT=>2,CURLOPT_SSL_VERIFYPEER=>true,CURLOPT_HTTPHEADER=>['Authorization: Bearer '.$settings['token'],'Content-Type: application/json'],CURLOPT_POSTFIELDS=>json_encode($command,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)]);
  $raw=curl_exec($ch);$code=curl_getinfo($ch,CURLINFO_HTTP_CODE);$data=json_decode($raw?:'',true);
  if($code!==200||!is_array($data))throw new RuntimeException('Historial temporalmente no disponible');
  if($transaction){if(count($data)!==count($command))throw new RuntimeException('Escritura sin confirmar');foreach($data as $reply)if(isset($reply['error'])||!array_key_exists('result',$reply))throw new RuntimeException('No se pudo guardar el historial');return $data;}
