@@ -1,6 +1,6 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
 const nodes={};function node(id){return nodes[id]??={value:'',textContent:'',handlers:{},children:[],addEventListener(e,f){this.handlers[e]=f},replaceChildren(){this.children=[]},append(x){this.children.push(x)},focus(){}}}
-vm.runInNewContext(fs.readFileSync(require('path').join(__dirname,'../calculadora.js'),'utf8'),{document:{getElementById:node,createElement:()=>({})},Number});
+vm.runInNewContext(fs.readFileSync(require('path').join(__dirname,'../calculadora.js'),'utf8'),{document:{getElementById:node,createElement:()=>({children:[],append(...items){this.children.push(...items)}})},Number});
 function calculate(input,total,warnings=false){node('calcInput').value=input;node('calcInput').handlers.input();const actual=Number(node('calcTotal').textContent.replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'));assert.equal(actual,total,input);if(warnings)assert(node('calcWarnings').textContent,input);else assert.equal(node('calcWarnings').textContent,'',input);}
 const first='34 09 69 37\n52 06 16 10 11\n05 68 24 17\n07 57 x 200bs';
 const second='13 50 48 61 0\n55 65 20 15 38\n36 23 54 25 49\n08 04 74 00 x 100bs Guacharo';

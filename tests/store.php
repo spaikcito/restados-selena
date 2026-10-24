@@ -5,6 +5,7 @@ function curl_init($url){return (object)['url'=>$url];}
 function curl_setopt_array($ch,$opts){$ch->opts=$opts;return true;}
 function curl_getinfo($ch,$key){return 200;}
 function redis_test($c){$db=&$GLOBALS['redis_test'];switch($c[0]){
+ case 'HGETALL':$flat=[];foreach(($db[$c[1]]??[]) as $field=>$value){$flat[]=$field;$flat[]=$value;}return ['result'=>$flat];
  case 'GET':return ['result'=>$db[$c[1]]??null];
  case 'SET':if(in_array('NX',$c,true)&&isset($db[$c[1]]))return ['result'=>null];$db[$c[1]]=$c[2];return ['result'=>'OK'];
  case 'HSET':$added=0;for($i=2;$i<count($c);$i+=2){if(!isset($db[$c[1]][$c[$i]]))$added++;$db[$c[1]][$c[$i]]=$c[$i+1];}return ['result'=>$added];
@@ -23,4 +24,12 @@ $body['resultados'][0]['numero']='25';selena_store_save('365',$body);check(count
 $key=selena_store_key('lock','365');check(selena_store_command(['SET',$key,'a','NX','EX',35])==='OK','Reserva compartida');check(selena_store_command(['SET',$key,'b','NX','EX',35])===null,'Reserva impide duplicado');
 $selena_store_lock=['key'=>$key,'token'=>'b'];selena_store_release();check(selena_store_command(['GET',$key])==='a','No libera reserva ajena');$selena_store_lock=['key'=>$key,'token'=>'a'];selena_store_release();check(selena_store_command(['GET',$key])===null,'Libera su reserva');
 $old=$body;$old['fecha']='2000-01-01';$GLOBALS['redis_test'][selena_store_key('snapshot','365')]=json_encode($old);check(selena_store_read('365')===null,'No reutiliza otro día');
-echo "PASS: storage transport contract, persistent read/write, no duplicates, corrections, independent zero strings, shared lock ownership, previous-day rejection.\n";
+// History reads saved rows only, filters dates and keeps 0 separate from 00.
+foreach($body['resultados'] as &$r)$r['fecha']=selena_today();unset($r);
+$body['resultados'][0]['numero']='0';selena_store_save('365',$body);selena_store_save('lotoven',$body);
+$history=selena_store_history(selena_today());check(count($history)===4,'Lee dos fuentes');
+check(count(array_filter($history,fn($r)=>selena_history_matches($r,'0')))===2,'Delfin exacto');
+check(count(array_filter($history,fn($r)=>selena_history_matches($r,'00')))===2,'Ballena exacta');
+check(count(array_filter($history,fn($r)=>selena_history_matches($r,'Delfín')))===2,'Nombre sin tildes');
+check(selena_store_history('2000-01-01')===[],'Día sin registros no consulta fuentes');
+echo "PASS: storage read/write, corrections, lock ownership, history by date/source, exact 0/00 and animal search.\n";

@@ -31,3 +31,24 @@ function selena_store_release(){
  try{selena_store_command(['EVAL',"if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end",1,$selena_store_lock['key'],$selena_store_lock['token']]);}catch(Throwable $e){error_log('Selena: no se pudo liberar la reserva de consulta');}
  $selena_store_lock=null;
 }
+
+function selena_history_matches($r,$query){
+ $q=trim($query);if(ctype_digit($q)){$n=$q==='0'?'0':($q==='00'?'00':str_pad((string)(int)$q,2,'0',STR_PAD_LEFT));return $r['numero']===$n;}
+ return str_contains(selena_normalized($r['animal']??''),selena_normalized($q));
+}
+function selena_store_history($date){
+ $commands=[];foreach(['365','lotoven','hoy'] as $source)$commands[]=['HGETALL','selena:v3:resultados:'.$date.':'.$source];
+ $replies=selena_store_command($commands,true);$rows=[];
+ foreach($replies as $i=>$reply){
+  $source=['365','lotoven','hoy'][$i];$values=$reply['result']??[];if(!is_array($values))continue;
+  // RESP may represent hashes as alternating field/value strings or a map.
+  foreach($values as $value){
+   $row=is_string($value)?json_decode($value,true):null;
+   if(!is_array($row)||($row['fecha']??'')!==$date)continue;
+   $filtered=selena_filtrar([$row]);if(!$filtered)continue;
+   $row=$filtered[0];$row['fuente']=$source;$rows[]=$row;
+  }
+ }
+ usort($rows,function($a,$b){$name=strcmp($a['loteria'],$b['loteria']);if($name)return $name;$ta=DateTimeImmutable::createFromFormat('!g:i A',$a['hora']);$tb=DateTimeImmutable::createFromFormat('!g:i A',$b['hora']);return ($tb?$tb->getTimestamp():0)<=>($ta?$ta->getTimestamp():0);});
+ return $rows;
+}

@@ -5,6 +5,13 @@
   const countEl=document.getElementById('calcCount');
   const details=document.getElementById('calcBreakdown');
   const warnings=document.getElementById('calcWarnings');
+  const lotteryPicker=document.getElementById('calcLotteries');
+  const lotterySummary=document.getElementById('calcLotterySummary');
+  const copyButton=document.getElementById('calcCopy');
+  const copyStatus=document.getElementById('calcCopyStatus');
+  let calculationReport='';
+  function pickerLotteries(){return Array.from(lotteryPicker?.querySelectorAll?.('input:checked')||[]).map(input=>input.value);}
+
   const money=v=>'Bs '+v.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});
   function parseMoney(s){
     s=s.trim().replace(/\s/g,'');
@@ -103,9 +110,9 @@
   function update(){
     let sumCents=0,amountOfNumbers=0,valid=0,bets=0,groups=0;
     let lotteries=[],previousWasHeader=false,blocked=false,previousSelections=[];
-    details.replaceChildren();const ignored=new Set(),unread=[],excluded=[];
+    details.replaceChildren();lotterySummary?.replaceChildren();calculationReport='';if(copyButton)copyButton.disabled=true;if(copyStatus)copyStatus.textContent='';const lotteryTotals=new Map();const ignored=new Set(),unread=[],excluded=[];
     if(input.value.length>20000){totalEl.textContent=money(0);countEl.textContent='0 selecciones';warnings.textContent='Divide la jugada en textos de hasta 20.000 caracteres.';return;}
-    const prepared=preparePlayText(input.value);lotteries=prepared.defaultNames;
+    const prepared=preparePlayText(input.value);lotteries=prepared.defaultNames.length?prepared.defaultNames:pickerLotteries();
     prepared.blocks.forEach(({text:line,lineNumber})=>{
       let rest=line.trim();if(!rest)return;
       if(!/(?:[x×]|\bpor\b)/i.test(rest)){
@@ -123,7 +130,7 @@
         let prefix=lotteryPrefix(match[1]);
         // With a current lottery, a bare animal name remains an animal.
         // Explicit «para» changes lottery and repeats the preceding selections.
-        if(lotteries.length&&!/^\s*para\b/i.test(match[1])&&playSelections(match[1]))prefix={names:[],rest:match[1]};
+        if(lotteries.length&&!prefix.rest&&!/^\s*para\b/i.test(match[1])&&playSelections(match[1]))prefix={names:[],rest:match[1]};
         if(prefix.names.length){lotteries=prefix.names;blocked=false;}
         let selections=playSelections(prefix.rest);
         const inherited=prefix.names.length&&!prefix.rest&&previousSelections.length>0;
@@ -141,6 +148,7 @@
         for(const item of perLottery){
           const el=document.createElement('div');el.className='calc-row';
           const label=item.name||'Sin lotería indicada (hasta 99)';
+          const aggregate=lotteryTotals.get(label)||{cents:0,bets:0};aggregate.cents+=item.accepted.length*cents;aggregate.bets+=item.accepted.length;lotteryTotals.set(label,aggregate);
           el.textContent=label+' · '+(item.accepted.join(', ')||'Sin selecciones dentro del rango')+' · '+item.accepted.length+' selecciones × '+money(cents/100)+' = '+money(item.accepted.length*cents/100)+(inherited?' (selecciones del grupo anterior)':'');
           if(item.rejected.length){
             const note=label+' (máximo '+item.limit+'): '+item.rejected.join(', ');
@@ -159,7 +167,21 @@
     countEl.textContent=amountOfNumbers+' selecciones · '+bets+' apuestas · '+groups+' grupos · '+valid+' bloques calculados';
     const partialWarning=ignored.size?'Total parcial. Partes sin calcular: '+[...new Set(unread)].join(' · ')+'. Revisa el nombre, la lotería y el monto. Usa «para guácharo» para cambiar de lotería.':'';
     warnings.textContent=[partialWarning,excluded.length?'No incluidos en el total por rango: '+[...new Set(excluded)].join(' · '):''].filter(Boolean).join(' ');
+    if(lotterySummary&&lotteryTotals.size){
+      const title=document.createElement('div');title.className='calc-summary-title';title.textContent='RESUMEN POR LOTERÍA';lotterySummary.append(title);
+      for(const [label,item] of lotteryTotals){const row=document.createElement('div');row.className='calc-summary-row';const name=document.createElement('span');name.textContent=label+' · '+item.bets+' apuestas';const amount=document.createElement('strong');amount.textContent=money(item.cents/100);row.append(name,amount);lotterySummary.append(row);}
+    }
+    const reportLines=[partialWarning?'CÁLCULO PARCIAL — revisar partes no reconocidas':'CÁLCULO DE JUGADAS',...Array.from(lotteryTotals,([label,item])=>label+': '+item.bets+' apuestas = '+money(item.cents/100)),'TOTAL: '+money(sumCents/100)];
+    if(warnings.textContent)reportLines.push('OBSERVACIONES: '+warnings.textContent);
+    calculationReport=reportLines.join('\n');if(copyButton)copyButton.disabled=groups===0;
+
   }
+  lotteryPicker?.addEventListener('change',update);
+  copyButton?.addEventListener('click',async()=>{
+    if(!calculationReport)return;
+    try{await navigator.clipboard.writeText(calculationReport);if(copyStatus)copyStatus.textContent='Cálculo copiado.';}
+    catch(error){if(copyStatus)copyStatus.textContent='No se pudo copiar automáticamente. Selecciona y copia el resumen.';}
+  });
   input.addEventListener('input',update);
   document.getElementById('calcClear').addEventListener('click',()=>{input.value='';update();input.focus();});
   update();
