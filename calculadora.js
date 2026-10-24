@@ -171,9 +171,7 @@
       const title=document.createElement('div');title.className='calc-summary-title';title.textContent='RESUMEN POR LOTERÍA';lotterySummary.append(title);
       for(const [label,item] of lotteryTotals){const row=document.createElement('div');row.className='calc-summary-row';const name=document.createElement('span');name.textContent=label+' · '+item.bets+' apuestas';const amount=document.createElement('strong');amount.textContent=money(item.cents/100);row.append(name,amount);lotterySummary.append(row);}
     }
-    const reportLines=[partialWarning?'CÁLCULO PARCIAL — revisar partes no reconocidas':'CÁLCULO DE JUGADAS',...Array.from(lotteryTotals,([label,item])=>label+': '+item.bets+' apuestas = '+money(item.cents/100)),'TOTAL: '+money(sumCents/100)];
-    if(warnings.textContent)reportLines.push('OBSERVACIONES: '+warnings.textContent);
-    calculationReport=reportLines.join('\n');if(copyButton)copyButton.disabled=groups===0;
+    calculationReport='total en '+(sumCents/100).toLocaleString('es-VE',{maximumFractionDigits:2})+' para proceder';if(copyButton)copyButton.disabled=groups===0;
 
   }
   lotteryPicker?.addEventListener('change',update);
