@@ -51,13 +51,24 @@
     let rest=cleanPlayText(text).replace(/[.,\-/]/g,' '),selections=[];
     while(rest){
       rest=rest.replace(/^[\s,;:/+&|.-]+/,'').replace(/^y\b\s*/,'');if(!rest)break;
-      const numeric=rest.match(/^\d{1,2}(?=$|[\s,;:/+&|.-])/);
+      const numeric=rest.match(/^\d+(?=$|[\s,;:/+&|.-])/);
       if(numeric){selections.push(numeric[0]);rest=rest.slice(numeric[0].length);continue;}
       const name=animalNames.find(name=>{const key=cleanPlayText(name);return rest===key||(rest.startsWith(key)&&/[\s,;:/+&|.-]/.test(rest[key.length]));});
       if(!name)return null;
       selections.push(name);rest=rest.slice(cleanPlayText(name).length);
     }
     return selections.length?selections:null;
+  }
+  const animalCodes=new Map(Object.entries({"Delfín": "0", "Carnero": "01", "Toro": "02", "Ciempiés": "03", "Alacrán": "04", "León": "05", "Rana": "06", "Perico": "07", "Ratón": "08", "Águila": "09", "Tigre": "10", "Gato": "11", "Caballo": "12", "Mono": "13", "Paloma": "14", "Zorro": "15", "Oso": "16", "Pavo": "17", "Burro": "18", "Chivo": "19", "Cerdo": "20", "Gallo": "21", "Camello": "22", "Cebra": "23", "Iguana": "24", "Gallina": "25", "Vaca": "26", "Perro": "27", "Zamuro": "28", "Elefante": "29", "Caimán": "30", "Lapa": "31", "Ardilla": "32", "Pescado": "33", "Venado": "34", "Jirafa": "35", "Culebra": "36", "Tortuga": "37", "Búfalo": "38", "Lechuza": "39", "Avispa": "40", "Canguro": "41", "Tucán": "42", "Mariposa": "43", "Chigüire": "44", "Garza": "45", "Puma": "46", "Pavo real": "47", "Puercoespín": "48", "Pereza": "49", "Canario": "50", "Pelícano": "51", "Pulpo": "52", "Caracol": "53", "Grillo": "54", "Hormiguero": "55", "Tiburón": "56", "Pato": "57", "Hormiga": "58", "Pantera": "59", "Camaleón": "60", "Panda": "61", "Cachicamo": "62", "Cangrejo": "63", "Gavilán": "64", "Araña": "65", "Lobo": "66", "Avestruz": "67", "Jaguar": "68", "Conejo": "69", "Bisonte": "70", "Guacamaya": "71", "Gorila": "72", "Hipopótamo": "73", "Turpial": "74", "Guácharo": "75", "Rinoceronte": "76", "Pingüino": "77", "Antílope": "78", "Calamar": "79", "Murciélago": "80", "Cuervo": "81", "Cucaracha": "82", "Búho": "83", "Camarón": "84", "Hámster": "85", "Buey": "86", "Cabra": "87", "Erizo de mar": "88", "Anguila": "89", "Hurón": "90", "Morrocoy": "91", "Cisne": "92", "Gaviota": "93", "Paujil": "94", "Escarabajo": "95", "Caballito de mar": "96", "Loro": "97", "Cocodrilo": "98", "Guacharito": "99", "Ballena": "00", "Oso hormiguero": "55", "Cochino": "20", "Serpiente": "36", "Pez": "33"}).map(([name,code])=>[cleanPlayText(name),code]));
+  function selectionCode(selection){return /^\d+$/.test(selection)?selection:animalCodes.get(cleanPlayText(selection));}
+  function lotteryLimit(name){return name==='Guácharo'?75:name==='Guacharito'||!name?99:36;}
+  function selectionsForLottery(selections,name){
+    const limit=lotteryLimit(name),accepted=[],rejected=[],indices=[];
+    selections.forEach((selection,index)=>{
+      const code=selectionCode(selection);
+      if(code!==undefined&&Number(code)<=limit){accepted.push(selection);indices.push(index);}else rejected.push(selection);
+    });
+    return {name,limit,accepted,rejected,indices};
   }
   function preparePlayText(value){
     // Ignore the currency unit without modifying what the customer pasted.
@@ -92,7 +103,7 @@
   function update(){
     let sumCents=0,amountOfNumbers=0,valid=0,bets=0,groups=0;
     let lotteries=[],previousWasHeader=false,blocked=false,previousSelections=[];
-    details.replaceChildren();const ignored=new Set(),unread=[];
+    details.replaceChildren();const ignored=new Set(),unread=[],excluded=[];
     if(input.value.length>20000){totalEl.textContent=money(0);countEl.textContent='0 selecciones';warnings.textContent='Divide la jugada en textos de hasta 20.000 caracteres.';return;}
     const prepared=preparePlayText(input.value);lotteries=prepared.defaultNames;
     prepared.blocks.forEach(({text:line,lineNumber})=>{
@@ -121,14 +132,23 @@
         if(blocked||!selections){ignored.add(lineNumber);unread.push('Línea '+lineNumber+': '+(rest||line).trim().slice(0,100));blocked=true;previousSelections=[];continue;}
         const amount=parseMoney(match[2]),cents=Math.round(amount*100);
         if(!Number.isFinite(amount)||amount<=0||!Number.isSafeInteger(cents)){ignored.add(lineNumber);unread.push('Línea '+lineNumber+': '+(rest||line).trim().slice(0,100));continue;}
-        const count=Math.max(1,lotteries.length),subCents=selections.length*cents*count;
+        const perLottery=(lotteries.length?lotteries:[null]).map(name=>selectionsForLottery(selections,name));
+        const betCount=perLottery.reduce((sum,item)=>sum+item.accepted.length,0),subCents=betCount*cents;
+        const acceptedIndices=new Set(perLottery.flatMap(item=>item.indices));
         if(!Number.isSafeInteger(sumCents+subCents)){ignored.add(lineNumber);unread.push('Línea '+lineNumber+': '+(rest||line).trim().slice(0,100));continue;}
         previousSelections=selections.slice();
-        sumCents+=subCents;lineCents+=subCents;amountOfNumbers+=selections.length;bets+=selections.length*count;groups++;lineGroups++;
-        const el=document.createElement('div');el.className='calc-row';
-        const label=lotteries.length?lotteries.join(' + '):'Sin lotería indicada';
-        el.textContent=label+' · '+selections.join(', ')+' · '+selections.length+' selecciones × '+money(cents/100)+' × '+count+' '+(count===1?'lotería':'loterías')+' = '+money(subCents/100)+(inherited?' (mismos animalitos o números del grupo anterior)':'');
-        details.append(el);
+        sumCents+=subCents;lineCents+=subCents;amountOfNumbers+=acceptedIndices.size;bets+=betCount;groups++;lineGroups++;
+        for(const item of perLottery){
+          const el=document.createElement('div');el.className='calc-row';
+          const label=item.name||'Sin lotería indicada (hasta 99)';
+          el.textContent=label+' · '+(item.accepted.join(', ')||'Sin selecciones dentro del rango')+' · '+item.accepted.length+' selecciones × '+money(cents/100)+' = '+money(item.accepted.length*cents/100)+(inherited?' (selecciones del grupo anterior)':'');
+          if(item.rejected.length){
+            const note=label+' (máximo '+item.limit+'): '+item.rejected.join(', ');
+            excluded.push(note);el.textContent+=' · Excluidos: '+item.rejected.join(', ');
+          }
+          details.append(el);
+        }
+        if(perLottery.length>1){const subtotal=document.createElement('div');subtotal.className='calc-row';subtotal.textContent='Subtotal grupo: '+money(subCents/100);details.append(subtotal);}
       }
       if(lineGroups){
         valid++;
@@ -137,7 +157,8 @@
     });
     totalEl.textContent=money(sumCents/100);
     countEl.textContent=amountOfNumbers+' selecciones · '+bets+' apuestas · '+groups+' grupos · '+valid+' bloques calculados';
-    warnings.textContent=ignored.size?'Total parcial. Partes sin calcular: '+[...new Set(unread)].join(' · ')+'. Revisa el nombre, la lotería y el monto. Usa «para guácharo» para cambiar de lotería.':'';
+    const partialWarning=ignored.size?'Total parcial. Partes sin calcular: '+[...new Set(unread)].join(' · ')+'. Revisa el nombre, la lotería y el monto. Usa «para guácharo» para cambiar de lotería.':'';
+    warnings.textContent=[partialWarning,excluded.length?'No incluidos en el total por rango: '+[...new Set(excluded)].join(' · '):''].filter(Boolean).join(' ');
   }
   input.addEventListener('input',update);
   document.getElementById('calcClear').addEventListener('click',()=>{input.value='';update();input.focus();});
