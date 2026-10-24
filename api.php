@@ -17,7 +17,7 @@ libxml_use_internal_errors(true);
 $dom=new DOMDocument(); $dom->loadHTML('<?xml encoding="utf-8"?>'.$html); libxml_clear_errors();
 $xp=new DOMXPath($dom);
 selena_require_today(selena_date($xp->evaluate('string(//input[@id="fecha-picker"]/@value)')));
-$names=['Condor Gana','Ruleta Royal','El Granjazo','GuacharoActivo','SelvaPlus','Lotto Activo','Lotto Activo RD','Loto Activo RD INT','La Granjita','CazaLoton','Monje Millonario','Chance Animal B','Chance Animal A','CentenaPlus','CentenaAnimalitos','TropiGana','Guacharito','Lotto Pantera','Ricachona','GranjitaPlus','LotoChaima','Lotto Animalito','PandaPlus','MegaAnimal','Granja Millonaria'];
+$names=selena_loterias();
 // Orden largo primero, para evitar reconocer "Lotto Activo" dentro de "Lotto Activo RD".
 usort($names,function($a,$b){return strlen($b)-strlen($a);});
 function compactText($s) {return trim(preg_replace('/\s+/u',' ',html_entity_decode($s, ENT_QUOTES|ENT_HTML5,'UTF-8')));}
@@ -65,14 +65,14 @@ foreach($xp->query('//img[@alt]') as $img){
   if(str_starts_with($srcImage,'//'))$srcImage='https:'.$srcImage;
   elseif(str_starts_with($srcImage,'/'))$srcImage='https://resultados365.com'.$srcImage;
   $parts=parse_url($srcImage);$safeImage=($parts && ($parts['scheme']??'')==='https' && in_array(strtolower($parts['host']??''),['resultados365.com','www.resultados365.com'],true))?$srcImage:'';
-  $results[]=['loteria'=>$name,'numero'=>str_pad($num,2,'0',STR_PAD_LEFT),'animal'=>$animal,'hora'=>$time,'imagen'=>$safeImage];
+  $results[]=['loteria'=>$name,'numero'=>selena_numero($num,$animal),'animal'=>$animal,'hora'=>$time,'imagen'=>$safeImage];
 }
 // Complemento para HTML que tiene el texto del sorteo pero no alt de imagen.
 if(!$results){
   $text=compactText($xp->evaluate('string(//body)'));
   foreach($names as $name){
     $pattern='/'.preg_quote($name,'/').'\s+((?:0?[1-9]|1[0-2])(?::[0-5]\d)?\s*[ap]m)\s+(\d{1,3})\s+([\p{L} ]{2,32})(?=\s|$)/iu';
-    if(preg_match($pattern,$text,$m)) $results[]=['loteria'=>$name,'numero'=>str_pad($m[2],2,'0',STR_PAD_LEFT),'animal'=>trim($m[3]),'hora'=>$m[1]];
+    if(preg_match($pattern,$text,$m)) $results[]=['loteria'=>$name,'numero'=>selena_numero($m[2],trim($m[3])),'animal'=>trim($m[3]),'hora'=>$m[1]];
   }
 }
 if(!$results) reply(['ok'=>false,'error'=>'La página respondió, pero no se pudieron identificar resultados. Es posible que haya cambiado su estructura.'],502);

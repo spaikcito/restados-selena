@@ -14,13 +14,13 @@ if(!$html||$http!==200)answer(['ok'=>false,'error'=>'Lotoven no respondió corre
 libxml_use_internal_errors(true);$dom=new DOMDocument();$dom->loadHTML('<?xml encoding="utf-8"?>'.$html);libxml_clear_errors();
 $xp=new DOMXPath($dom);
 function normtxt($v){return trim(preg_replace('/\s+/u',' ',html_entity_decode($v,ENT_QUOTES|ENT_HTML5,'UTF-8')));}
-function canonical($v){$v=mb_strtolower(trim($v),'UTF-8');$v=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v);$v=preg_replace('/[^a-z0-9]/','',$v);if(preg_match('/activord(?:int|inter)/',$v))return 'Loto Activo RD INT';if($v==='selvaplus')return 'SelvaPlus';if(str_contains($v,'monjemillonario'))return 'Monje Millonario';if(str_contains($v,'guacharito'))return 'Guacharito';if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita') && !str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'chaima'))return 'LotoChaima';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
+function canonical($v){$v=mb_strtolower(trim($v),'UTF-8');$v=iconv('UTF-8','ASCII//TRANSLIT//IGNORE',$v);$v=preg_replace('/[^a-z0-9]/','',$v);if(preg_match('/activord(?:int|inter)/',$v))return 'Loto Activo RD INT';if($v==='selvaplus')return 'SelvaPlus';if(str_contains($v,'monjemillonario'))return 'Monje Millonario';if(str_contains($v,'guacharito'))return 'Guacharito';if(str_contains($v,'guacharoactivo'))return 'GuacharoActivo';if(str_contains($v,'granjita') && !str_contains($v,'plus'))return 'La Granjita';if(str_contains($v,'rdominicana')||str_contains($v,'activord'))return 'Lotto Activo RD';if($v==='lottoactivo'||$v==='lotoactivo')return 'Lotto Activo';return null;}
 // Cada cabecera «Resultados ...» delimita el bloque de una sola lotería.
 // Solo se leen sus propios descendientes y hermanos hasta el siguiente título.
 $headers=$xp->query('//h2|//h3|//h4');$found=[];
 foreach($headers as $h){
  $heading=normtxt($h->textContent);if(!preg_match('/^Resultados\s+(.+)$/iu',$heading,$m))continue;
- $name=canonical($m[1]);if(!$name)continue;
+ $name=canonical($m[1]);if(!$name||!selena_loteria($name))continue;
  $buffer='';$node=$h->nextSibling;$steps=0;
  while($node && $steps++<120){
    if($node->nodeType===XML_ELEMENT_NODE){
@@ -43,7 +43,7 @@ foreach($headers as $h){
  if(selena_date($buffer)!==selena_today())continue;
  if(preg_match_all('/(?<!\d)(\d{1,3})\s+([\p{L}][\p{L}\s\-]{1,26}?)\s+((?:0?[1-9]|1[0-2]):[0-5]\d\s*[AP]M)\b/iu',$buffer,$matches,PREG_SET_ORDER)){
    foreach($matches as $m2){$animal=normtxt($m2[2]);$time=strtoupper(preg_replace('/\s+/',' ',trim($m2[3])));if(preg_match('/(?:Resultados|Tuesday|October)/iu',$animal))continue;
-     $key=$name.'|'.$time;$found[$key]=['loteria'=>$name,'numero'=>str_pad($m2[1],2,'0',STR_PAD_LEFT),'animal'=>$animal,'hora'=>$time];
+     $key=$name.'|'.$time;$found[$key]=['loteria'=>$name,'numero'=>selena_numero($m2[1],$animal),'animal'=>$animal,'hora'=>$time];
    }
  }
 }
