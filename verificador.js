@@ -3,11 +3,26 @@
 const $=id=>document.getElementById(id), normalize=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
 // Tabla de equivalencias aportada por el usuario: El Guacharito Millonario.
 // No reutilizar estos números para otras tablas sin verificar sus reglas.
-const ANIMALES_GUACHARITO = {"0": "Delfín", "01": "Carnero", "02": "Toro", "03": "Ciempiés", "04": "Alacrán", "05": "León", "06": "Rana", "07": "Perico", "08": "Ratón", "09": "Águila", "10": "Tigre", "11": "Gato", "12": "Caballo", "13": "Mono", "14": "Paloma", "15": "Zorro", "16": "Oso", "17": "Pavo", "18": "Burro", "19": "Chivo", "20": "Cerdo", "21": "Gallo", "22": "Camello", "23": "Cebra", "24": "Iguana", "25": "Gallina", "26": "Vaca", "27": "Perro", "28": "Zamuro", "29": "Elefante", "30": "Caimán", "31": "Lapa", "32": "Ardilla", "33": "Pescado", "34": "Venado", "35": "Jirafa", "36": "Culebra", "37": "Tortuga", "38": "Búfalo", "39": "Lechuza", "40": "Avispa", "41": "Canguro", "42": "Tucán", "43": "Mariposa", "44": "Chigüire", "45": "Garza", "46": "Puma", "47": "Pavo real", "48": "Puercoespín", "49": "Pereza", "50": "Canario", "51": "Pelícano", "52": "Pulpo", "53": "Caracol", "54": "Grillo", "55": "Hormiguero", "56": "Tiburón", "57": "Pato", "58": "Hormiga", "59": "Pantera", "60": "Camaleón", "61": "Panda", "62": "Cachicamo", "63": "Cangrejo", "64": "Gavilán", "65": "Araña", "66": "Lobo", "67": "Avestruz", "68": "Jaguar", "69": "Conejo", "70": "Bisonte", "71": "Guacamaya", "72": "Gorila", "73": "Hipopótamo", "74": "Turpial", "75": "Guácharo", "76": "Rinoceronte", "77": "Pingüino", "78": "Antílope", "79": "Calamar", "80": "Murciélago", "81": "Cuervo", "82": "Cucaracha", "83": "Búho", "84": "Camarón", "85": "Hámster", "86": "Buey", "87": "Cabra", "88": "Erizo de mar", "89": "Anguila", "90": "Hurón", "91": "Morrocoy", "92": "Cisne", "93": "Gaviota", "94": "Paujil", "95": "Escarabajo", "96": "Caballito de mar", "97": "Loro", "98": "Cocodrilo", "99": "Guacharito", "00": "Ballena"};
+const ANIMALES_GUACHARITO = {"0": "Delfín", "01": "Carnero", "02": "Toro", "03": "Ciempiés", "04": "Alacrán", "05": "León", "06": "Rana", "07": "Perico", "08": "Ratón", "09": "Águila", "10": "Tigre", "11": "Gato", "12": "Caballo", "13": "Mono", "14": "Paloma", "15": "Zorro", "16": "Oso", "17": "Pavo", "18": "Burro", "19": "Chivo", "20": "Cerdo", "21": "Gallo", "22": "Camello", "23": "Cebra", "24": "Iguana", "25": "Gallina", "26": "Vaca", "27": "Perro", "28": "Zamuro", "29": "Elefante", "30": "Caimán", "31": "Lapa", "32": "Ardilla", "33": "Pescado", "34": "Venado", "35": "Jirafa", "36": "Culebra", "37": "Tortuga", "38": "Búfalo", "39": "Lechuza", "40": "Avispa", "41": "Canguro", "42": "Tucán", "43": "Mariposa", "44": "Chigüire", "45": "Garza", "46": "Puma", "47": "Pavo real", "48": "Puercoespín", "49": "Pereza", "50": "Canario", "51": "Pelícano", "52": "Pulpo", "53": "Caracol", "54": "Grillo", "55": "Oso Hormiguero", "56": "Tiburón", "57": "Pato", "58": "Hormiga", "59": "Pantera", "60": "Camaleón", "61": "Panda", "62": "Cachicamo", "63": "Cangrejo", "64": "Gavilán", "65": "Araña", "66": "Lobo", "67": "Avestruz", "68": "Jaguar", "69": "Conejo", "70": "Bisonte", "71": "Guacamaya", "72": "Gorila", "73": "Hipopótamo", "74": "Turpial", "75": "Guácharo", "76": "Rinoceronte", "77": "Pingüino", "78": "Antílope", "79": "Calamar", "80": "Murciélago", "81": "Cuervo", "82": "Cucaracha", "83": "Búho", "84": "Camarón", "85": "Hámster", "86": "Buey", "87": "Cabra", "88": "Erizo de mar", "89": "Anguila", "90": "Hurón", "91": "Morrocoy", "92": "Cisne", "93": "Gaviota", "94": "Colibrí", "95": "Escarabajo", "96": "Caballito de mar", "97": "Loro", "98": "Cocodrilo", "99": "Guacharito", "00": "Ballena"};
 const animalKey = value => (value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 const numeroPorAnimal = Object.fromEntries(Object.entries(ANIMALES_GUACHARITO).map(([n,nombre])=>[animalKey(nombre),n]));
 const animalNames = Object.keys(numeroPorAnimal).sort((a,b)=>b.length-a.length);
 const animalPattern = new RegExp('\\b(?:' + animalNames.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|').replace(/ /g,'\\s+') + ')\\b','gi');
+// Match full names first, including accented spellings, without changing lottery headings.
+const nameLetters={a:'[aáàäâ]',e:'[eéèëê]',i:'[iíìïî]',o:'[oóòöô]',u:'[uúùüû]',n:'[nñ]'};
+const visibleAnimalPattern=new RegExp('(?<![\\p{L}0-9])(?:'+animalNames.map(name=>[...name].map(c=>c===' '?'[ \\t]+':nameLetters[c]||c).join('')).join('|')+')(?![\\p{L}0-9])','giu');
+function replaceAnimalNames(text,completedOnly=false){
+ return String(text||'').split('\n').map(line=>{
+  const play=/[x×]\s*\d/i.test(line);
+  if(!play&&(completedOnly||lottery(line)||/^(?:agencia|fecha|ticket|total|hora)\b/i.test(line.trim())))return line;
+  return line.replace(visibleAnimalPattern,(name,offset)=>{
+   const number=numeroPorAnimal[animalKey(name)];
+   const previous=line.slice(0,offset).match(/\b(\d{1,2})[ \t]*$/);
+   if(previous&&(previous[1]==='0'?'0':previous[1].padStart(2,'0'))===number)return '';
+   return number;
+  });
+ }).join('\n');
+}
 function numerosEnJugada(fragmento) {
  // Un número seguido por su nombre representa una jugada, no dos.
  let piece=animalKey(fragmento);
@@ -54,7 +69,7 @@ function time(s){const span=(s||'').match(/(\d{1,2})\s*am\s*[-–]\s*(\d{1,2})\s
 const amount=s=>{s=s.trim();const comma=s.lastIndexOf(','),dot=s.lastIndexOf('.');if(comma>=0&&dot>=0)return Number(comma>dot?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,''));if(comma>=0)return Number(s.replace(/\./g,'').replace(',','.'));if(dot>=0){const parts=s.split('.');return Number(parts.length>2?parts.join(''):s)}return Number(s)};
 // Normalize play separators only: ticket dates, totals and decimal stakes remain intact.
 function normalizeTicketText(text){
- return String(text||'').replace(/\r/g,'').split('\n').map(line=>{
+ return replaceAnimalNames(text).replace(/\r/g,'').split('\n').map(line=>{
   if(!/[x×]\s*\d/i.test(line))return line;
   const protectedValues=[];
   const protect=value=>{const token='§'+String.fromCharCode(65+protectedValues.length)+'§';protectedValues.push([token,value]);return token;};
@@ -142,5 +157,13 @@ for(const field of [$('original'),$('registered')])field.addEventListener('paste
  const text=event.clipboardData?.getData('text/plain');if(text===undefined)return;
  event.preventDefault();field.setRangeText(normalizeTicketText(text),field.selectionStart,field.selectionEnd,'end');update();
 });
-$('original').addEventListener('input',update);$('registered').addEventListener('input',update);$('clear').onclick=()=>{$('original').value='';$('registered').value='';update()};$('demo').onclick=()=>{$('original').value=`Agencia: agencia selena3\n20/10/2026 06:21:01 PM\nLotoAct 07:00 PM\n04,06,33,22,23 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00\nTOTAL TICKET VES:2000.00`;$('registered').value=`LotoActivo 07:00 PM\n04,06,33,22 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00`;update()};$('copy').onclick=async()=>{if(!report)return;try{await navigator.clipboard.writeText(report);$('copyStatus').textContent='Reporte copiado.'}catch(e){$('copyStatus').textContent='No se pudo copiar automáticamente. Prueba en localhost o revisa los permisos del navegador.'}};update();
+for(const field of [$('original'),$('registered')]){
+ field.addEventListener('input',event=>{
+  if(event.isComposing){update();return;}
+  const start=field.selectionStart,end=field.selectionEnd,old=field.value,next=replaceAnimalNames(old,true);
+  if(next!==old){const newStart=replaceAnimalNames(old.slice(0,start),true).length,newEnd=replaceAnimalNames(old.slice(0,end),true).length;field.value=next;field.setSelectionRange(Math.min(newStart,next.length),Math.min(newEnd,next.length));}
+  update();
+ });
+ field.addEventListener('blur',()=>{field.value=replaceAnimalNames(field.value);update();});
+}$('clear').onclick=()=>{$('original').value='';$('registered').value='';update()};$('demo').onclick=()=>{$('original').value=`Agencia: agencia selena3\n20/10/2026 06:21:01 PM\nLotoAct 07:00 PM\n04,06,33,22,23 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00\nTOTAL TICKET VES:2000.00`;$('registered').value=`LotoActivo 07:00 PM\n04,06,33,22 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00`;update()};$('copy').onclick=async()=>{if(!report)return;try{await navigator.clipboard.writeText(report);$('copyStatus').textContent='Reporte copiado.'}catch(e){$('copyStatus').textContent='No se pudo copiar automáticamente. Prueba en localhost o revisa los permisos del navegador.'}};update();
 })();
