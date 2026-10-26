@@ -52,7 +52,20 @@ function lottery(s){
 }
 function time(s){const span=(s||'').match(/(\d{1,2})\s*am\s*[-–]\s*(\d{1,2})\s*pm/i);if(span)return `RANGO ${span[1]}AM-${span[2]}PM`;const raw=(s||'').replace(/\b(\d{1,2})\s*(am|pm)\b/ig,'$1:00 $2');let m=raw.match(/\b(\d{1,2}):(\d{2})\s*(AM|PM)\b/i);if(m){let h=+m[1]%12+(m[3].toUpperCase()==='PM'?12:0);return String(h).padStart(2,'0')+':'+m[2]}let range=raw.match(/\b(\d{1,2})\s*am\s*[-–]\s*(\d{1,2})\s*pm\b/i);if(range)return `RANGO ${range[1]}AM-${range[2]}PM`;return ''}
 const amount=s=>{s=s.trim();const comma=s.lastIndexOf(','),dot=s.lastIndexOf('.');if(comma>=0&&dot>=0)return Number(comma>dot?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,''));if(comma>=0)return Number(s.replace(/\./g,'').replace(',','.'));if(dot>=0){const parts=s.split('.');return Number(parts.length>2?parts.join(''):s)}return Number(s)};
-function parse(text){const out={entries:[],unclear:[],dates:[],heads:[],total:null};let context=null;let lines=text.replace(/\r/g,'').split('\n');for(let i=0;i<lines.length;i++){
+// Normalize play separators only: ticket dates, totals and decimal stakes remain intact.
+function normalizeTicketText(text){
+ return String(text||'').replace(/\r/g,'').split('\n').map(line=>{
+  if(!/[x×]\s*\d/i.test(line))return line;
+  const protectedValues=[];
+  const protect=value=>{const token='§'+String.fromCharCode(65+protectedValues.length)+'§';protectedValues.push([token,value]);return token;};
+  let clean=line.replace(/\b(?:\d{4}-\d{2}-\d{2}|\d{2}\/\d{2}\/\d{4}|\d{1,2}\s*am\s*[-–]\s*\d{1,2}\s*pm)\b/gi,protect);
+  clean=clean.replace(/[x×]\s*(\d[\d.,]*)/gi,(_,raw)=>' '+protect('x '+amount(raw.replace(/[.,]+$/,'')).toFixed(2))+' ');
+  clean=clean.replace(/[,./_\-]+/g,' ');
+  for(const [token,value] of protectedValues)clean=clean.replace(token,value);
+  return clean.replace(/[ \t]+/g,' ').trim();
+ }).join('\n');
+}
+function parse(text){const out={entries:[],unclear:[],dates:[],heads:[],total:null};let context=null;let lines=normalizeTicketText(text).split('\n');for(let i=0;i<lines.length;i++){
  let line=lines[i].trim();if(!line||/^[\s*`=\-_]+$/.test(line))continue;
  let day=line.match(/\b(\d{4}-\d{2}-\d{2}|\d{2}\/\d{2}\/\d{4})\b/);if(day){let d=day[1];out.dates.push(d.includes('-')?d.split('-').reverse().join('/'):d)}
  let tot=line.match(/(?:total(?:\s+ticket)?(?:\s*\([^)]*\))?\s*(?:ves|bsd|bs)?\s*[:.]?\s*)([\d.,]+)/i);if(tot)out.total=amount(tot[1]);
@@ -125,5 +138,9 @@ function updateReaction(count, ready){
  label.textContent=mensaje;
 }
 let report='';function update(){let t1=$('original').value,t2=$('registered').value;if(!t1.trim()||!t2.trim()){$('summary').textContent='Pega los dos textos para comparar.';$('diffs').replaceChildren();report='';updateReaction(0,false);return}let a=parse(t1),b=parse(t2),ds=diff(a,b);updateReaction(ds.length,true);$('summary').textContent=ds.length?`${ds.length} observación(es) · ${a.entries.length} jugadas originales y ${b.entries.length} registradas`:`✓ Coinciden ${a.entries.length} jugadas. Revisa visualmente los tickets.`;$('summary').className='summary '+(ds.length?'bad':'good');const area=$('diffs');area.replaceChildren();for(let d of ds){let node=document.createElement('div');node.className='line';let title=document.createElement('b');title.className=d.type;title.textContent=(d.type==='bad'?'✖ ':'⚠ ')+d.head;let content=document.createElement('div');content.textContent=d.detail;content.style.whiteSpace='pre-wrap';node.append(title,content);if(d.kind==='amount'||d.kind==='lottery')node.classList.add('grouped-error');area.append(node)}report=[`VERIFICADOR AG SELENA`,`${ds.length} observación(es)`,...ds.map(d=>`${d.head}\n${d.detail}`)].join('\n------------------------------\n')}
+for(const field of [$('original'),$('registered')])field.addEventListener('paste',event=>{
+ const text=event.clipboardData?.getData('text/plain');if(text===undefined)return;
+ event.preventDefault();field.setRangeText(normalizeTicketText(text),field.selectionStart,field.selectionEnd,'end');update();
+});
 $('original').addEventListener('input',update);$('registered').addEventListener('input',update);$('clear').onclick=()=>{$('original').value='';$('registered').value='';update()};$('demo').onclick=()=>{$('original').value=`Agencia: agencia selena3\n20/10/2026 06:21:01 PM\nLotoAct 07:00 PM\n04,06,33,22,23 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00\nTOTAL TICKET VES:2000.00`;$('registered').value=`LotoActivo 07:00 PM\n04,06,33,22 X200.00\nLaGranjita 07:00 PM\n04,06,33,22,23 X200.00`;update()};$('copy').onclick=async()=>{if(!report)return;try{await navigator.clipboard.writeText(report);$('copyStatus').textContent='Reporte copiado.'}catch(e){$('copyStatus').textContent='No se pudo copiar automáticamente. Prueba en localhost o revisa los permisos del navegador.'}};update();
 })();
